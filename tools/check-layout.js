@@ -81,6 +81,13 @@ host.run('local g = __ADDON_NS.games.warlockle.obj; g:openPractice(); local n = 
 host.advance(0.3); check('warlockle 4 misses');
 host.run('local g = __ADDON_NS.games.warlockle.obj; for _, k in ipairs(__ADDON_NS.TALENT_ORDER) do if not g.s.done and k ~= g.s.target then g:guess(k) end end');
 host.advance(0.3); check('warlockle missed');
+host.run('__ADDON_NS.open("ware")'); host.advance(0.3); check('ware start');
+host.run('__ADDON_NS.games.ware.obj:start()');
+for (let i = 0; i < 9; i++) {
+  host.advance(1.2); check('ware ' + host.call('tostring', null) + i);
+  host.run('local g = __ADDON_NS.games.ware.obj; if g.m then g.m.result = "win" end'); host.advance(1);
+}
+host.run('local g = __ADDON_NS.games.ware.obj; g.lifeLeft = 1; if g.m then g.m.result = "lose" end'); host.advance(3); check('ware over');
 if (host.errors.length) { console.log('FAIL: Lua error\n' + host.errors.join('\n')); process.exit(1); }
 if (problems.size) { console.log('CHECK (' + problems.size + '):\n  ' + [...problems].join('\n  ')); process.exit(1); }
 console.log('OK: every screen fits');

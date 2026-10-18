@@ -4,7 +4,6 @@ local S = A.SPELLS
 local function soon(key, order, name, icon, tagline)
   A.RegisterGame({ key = key, name = name, order = order, ready = false, icon = icon, tagline = tagline })
 end
-soon('ware', 5, 'Warlock Ware', S.lifeTap.id, 'Micro-games of a few seconds each. Life Tap! Spell queue! Catch the proc!')
 soon('pegs', 6, 'Shadow Pegs', S.shadowBolt.id, 'Bounce a Shadow Bolt through the pegs and light them all up.')
 soon('taptap', 7, 'Tap Tap DPS', S.rainOfFire.id, 'Your rotation is the song chart. Hit the notes on time, see your DPS.')
 soon('merge', 8, 'Demon 2048', A.PETS.imp.spell, 'Merge soul shards into ever bigger demons.')

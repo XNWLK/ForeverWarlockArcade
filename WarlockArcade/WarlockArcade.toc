@@ -15,4 +15,5 @@ Games\ShardUI.lua
 Games\Juggler.lua
 Games\HigherLower.lua
 Games\Warlockle.lua
+Games\Ware.lua
 Games\Coming.lua

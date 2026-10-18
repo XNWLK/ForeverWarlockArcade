@@ -149,6 +149,7 @@ Object.keys(WL.SPELLS).forEach(k => add(WL.SPELLS[k].id, k));
 Object.keys(WL.BOOK_RANKS || {}).forEach(k => { const b = WL.spellsFor({ options: { bookRanks: true } })[k]; if (b) add(b.id, k); });
 Object.keys(talents).forEach(k => add(talents[k].spell, 'talent_' + k));
 Object.keys(PETS).forEach(k => add(PETS[k].spell, 'pet_' + k));
+add(17941, 'shadowTrance');   // the Shadow Trance proc (Nightfall)
 USE.forEach(k => { const c = consumables[k], pic = WL.ICONS['consumable_' + k]; if (pic) icons[c.spell ? 'spell:' + c.spell : 'item:' + c.item] = pic; });
 icons.unknown = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36"><rect width="36" height="36" fill="#2a2333"/><text x="18" y="26" font-size="22" text-anchor="middle" fill="#a89cc0" font-family="serif">?</text></svg>');
 fs.writeFileSync(path.join(ROOT, 'web', 'icons.js'),
