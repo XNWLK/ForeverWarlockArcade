@@ -7,4 +7,5 @@
   Cards crit with the real spell crit of the Forever Warlock Sim's standard character. Your run is saved.
 - **DoT Juggler**: keep Corruption, Bane of Agony and Immolate ticking on up to six training dummies for 90 seconds.
   Real cast times, global cooldown, spell queue, mana, damage per tick and Life Tap from the sim. Your best DPS is kept.
-- Six more games are on the way.
+- **Higher or Lower**, **Warlockle**, **Warlock Ware**, **Shadow Pegs**, **Tap Tap DPS** and **Demon 2048**: all eight games are playable.
+- Fixed: after winning a blind in Shard & Mult, the Collect button could not be clicked. Enter collects too.

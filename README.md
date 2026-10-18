@@ -14,12 +14,12 @@ The games use real numbers from the [Forever Warlock Sim](https://xnwlk.github.i
 |---|---|---|
 | **Shard & Mult** | A poker-hand roguelike. The suits are Shadow Bolt, Corruption, Immolate and Incinerate, J/Q/K are demons, talents are your jokers, Molten Core bosses are the blinds and Ragnaros waits at ante 8. | Playable |
 | **DoT Juggler** | Training dummies keep arriving: keep Corruption, Bane of Agony and Immolate ticking on as many as you can for 90 seconds, with real cast times, global cooldown, mana, damage per tick and Life Tap. | Playable |
-| Higher or Lower | Which build sims higher? | Coming soon |
-| Warlockle | A daily guessing puzzle. | Coming soon |
-| Warlock Ware | Micro-games of a few seconds each. | Coming soon |
-| Shadow Pegs | Bounce a Shadow Bolt through the pegs. | Coming soon |
-| Tap Tap DPS | Your rotation is the song chart. | Coming soon |
-| Demon 2048 | Merge soul shards into bigger demons. | Coming soon |
+| **Higher or Lower** | Which build sims more DPS, which spell deals more damage in its build, which stat is worth more, which cast hits harder - every number is the sim's own. Keep the streak going. | Playable |
+| **Warlockle** | The talent of the day: guess it in six tries from its tree, tier, column and ranks. The same talent for everyone, in the browser and in the game. | Playable |
+| **Warlock Ware** | Seven micro-games of a few seconds each, faster and faster: Life Tap!, Queue it! (the 0.4 s spell queue), Catch the proc!, Refresh!, Pick it!, Drain Soul!, Living Bomb! | Playable |
+| **Shadow Pegs** | Aim and bounce a Shadow Bolt through the pegs; clear every soul shard peg. Pegs deal the real damage of a Corruption tick, a Shadow Bolt and an Immolate. | Playable |
+| **Tap Tap DPS** | The rotation is the song chart: a 120 s fight of the sim's standard character as falling notes. Casts are hold notes - let go early and the cast is interrupted. Your score is the DPS. | Playable |
+| **Demon 2048** | Merge soul shards into Imps, Voidwalkers, Succubi ... all the way to the Demon Lord. | Playable |
 
 ## In the game
 

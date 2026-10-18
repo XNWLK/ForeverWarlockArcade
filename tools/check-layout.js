@@ -96,6 +96,12 @@ for (let l = 2; l <= 4; l++) { host.run('local g = __ADDON_NS.games.pegs.obj; g:
 host.run('__ADDON_NS.open("taptap")'); host.advance(0.3); check('taptap start');
 host.run('__ADDON_NS.games.taptap.obj:play()'); host.advance(3); check('taptap playing'); host.advance(12); check('taptap later');
 host.advance(60); check('taptap done');
+host.run('__ADDON_NS.open("merge")'); host.advance(0.3); check('merge start');
+host.run('local g = __ADDON_NS.games.merge.obj; local M = __ADDON_NS.MergeRules; for r = 1, 4 do for c = 1, 4 do g.s.grid[r][c] = { tier = (r - 1) * 4 + c <= 11 and (r - 1) * 4 + c or 1, id = 900 + r * 4 + c } end end; g:draw()');
+host.advance(0.5); check('merge every demon');
+host.run('local g = __ADDON_NS.games.merge.obj; g:showOverlay("won")'); host.advance(0.2); check('merge won');
+host.run('local g = __ADDON_NS.games.merge.obj; g:showOverlay("over")'); host.advance(0.2); check('merge over');
+host.run('__ADDON_NS.games.merge.obj:newGame(); __ADDON_NS.open(nil)'); host.advance(0.3); check('picker, all games');
 if (host.errors.length) { console.log('FAIL: Lua error\n' + host.errors.join('\n')); process.exit(1); }
 if (problems.size) { console.log('CHECK (' + problems.size + '):\n  ' + [...problems].join('\n  ')); process.exit(1); }
 console.log('OK: every screen fits');

@@ -1,6 +1,6 @@
 ## Interface: 16001
 ## Title: Forever Warlock Arcade
-## Notes: Little Warlock games: Shard & Mult, DoT Juggler and more to come. Type /arcade
+## Notes: Eight little Warlock games on the Forever Warlock Sim's numbers. Type /arcade
 ## Author: Xn
 ## Version: 0.1.0
 ## X-Website: https://github.com/XNWLK/ForeverWarlockArcade
@@ -18,4 +18,4 @@ Games\Warlockle.lua
 Games\Ware.lua
 Games\Pegs.lua
 Games\TapTap.lua
-Games\Coming.lua
+Games\Merge.lua
