@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Forever Warlock Arcade</title>
+<meta name="description" content="Little Warlock games for WoW: Forever fans - in the browser and as an addon in the game.">
+<link rel="icon" href="art/logo-64.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Philosopher:wght@400;700&family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root { --bg: #07050b; --bar: #110c18; --line: #2c2238; --text: #b9adc9; --link: #e8c766; }
+  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text); overflow: hidden;
+    font: 13px/1.3 'Roboto Condensed', 'Arial Narrow', sans-serif; }
+  body { display: flex; flex-direction: column; background: radial-gradient(ellipse at 50% 30%, #1a1024 0%, #07050b 70%); }
+  #stage { position: relative; flex: 1; overflow: hidden; touch-action: manipulation; user-select: none; -webkit-user-select: none; }
+  .wow-ui { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
+  .wow-ui > div { position: absolute; box-sizing: border-box; pointer-events: none; }
+  .wow-ui > .wow-frame { pointer-events: auto; }
+  .wow-font { display: flex; overflow: visible; }
+  .wow-font > span { display: block; width: 100%; }
+  .wow-tip { position: absolute; display: none; max-width: 300px; padding: 7px 9px; box-sizing: border-box; pointer-events: none;
+    background: rgba(9, 8, 22, 0.94); border: 1px solid #6b6b84; border-radius: 4px; box-shadow: 0 2px 8px #000a;
+    font: 12px/1.35 'Philosopher', serif; color: #ffd200; }
+  .wow-tip-row { display: flex; gap: 14px; justify-content: space-between; }
+  .wow-tip-row.head { font-size: 14px; margin-bottom: 2px; }
+  .wow-tip-row .right { white-space: nowrap; }
+  .wow-error { position: fixed; left: 0; right: 0; bottom: 30px; display: none; padding: 6px 12px; background: #4a0d0d; color: #ffd5d5;
+    font: 12px monospace; z-index: 99999; white-space: pre-wrap; }
+  footer { flex: none; height: 28px; display: flex; align-items: center; justify-content: center; gap: 16px; padding: 0 16px;
+    background: var(--bar); border-top: 1px solid var(--line); white-space: nowrap; overflow-x: auto; }
+  footer a { color: var(--link); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+  footer .sep { color: #4a3d5a; }
+  #loading { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font: 22px 'Cinzel', serif; color: #8a7aa0; }
+  body.ready #loading { display: none; }
+</style>
+</head>
+<body>
+<div id="stage"><div id="loading">Summoning the arcade...</div></div>
+<footer>
+  <span>Forever Warlock Arcade</span><span class="sep">|</span>
+  <a href="https://github.com/XNWLK/ForeverWarlockArcade" target="_blank" rel="noopener">GitHub</a><span class="sep">|</span>
+  <a href="https://xnwlk.github.io/WarlockSIM/" target="_blank" rel="noopener">Warlock SIM</a>
+  <a href="https://xnwlk.github.io/ForeverWarlocking/" target="_blank" rel="noopener">Forever Warlocking</a>
+  <a href="https://www.curseforge.com/wow/addons/xns-warlock-sim" target="_blank" rel="noopener">Sim addon</a>
+</footer>
+<noscript><p style="position:fixed;top:40%;width:100%;text-align:center">The arcade needs JavaScript.</p></noscript>
+<script src="web/fengari.js"></script>
+<script src="web/wow-core.js"></script>
+<script src="web/wow-dom.js"></script>
+<script src="web/sound.js"></script>
+<script src="web/icons.js"></script>
+<script>WowDom.start({ addon: 'WarlockArcade', version: '0.1.0' });</script>
+</body>
+</html>

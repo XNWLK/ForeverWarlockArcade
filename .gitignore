@@ -1,0 +1,7 @@
+# Local only (not in the public repository)
+tools/node_modules/
+private/
+docs/
+CLAUDE.md
+TODO.md
+*.zip
