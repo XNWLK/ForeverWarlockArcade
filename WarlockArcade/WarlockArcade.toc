@@ -1,6 +1,6 @@
 ## Interface: 16001
 ## Title: Forever Warlock Arcade
-## Notes: Little Warlock games: Shard & Mult (Balatro style) and more to come. Type /arcade
+## Notes: Little Warlock games: Shard & Mult, DoT Juggler and more to come. Type /arcade
 ## Author: Xn
 ## Version: 0.1.0
 ## X-Website: https://github.com/XNWLK/ForeverWarlockArcade
@@ -12,4 +12,5 @@ Kit.lua
 Core.lua
 Games\ShardRules.lua
 Games\ShardUI.lua
+Games\Juggler.lua
 Games\Coming.lua

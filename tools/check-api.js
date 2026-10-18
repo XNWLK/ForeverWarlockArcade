@@ -31,6 +31,13 @@ const say = (file, what) => { problems++; console.log('  ' + file + ': ' + what)
 
 const files = [];
 (function walk(dir) { fs.readdirSync(dir, { withFileTypes: true }).forEach(e => { const p = path.join(dir, e.name); if (e.isDirectory()) walk(p); else if (e.name.endsWith('.lua') && e.name !== 'Data.lua') files.push(path.relative(ADDON, p)); }); })(ADDON);
+// methods the arcade defines itself (function X:name, X.name = function, name = function(self ...): not the game's
+const OWN = new Set();
+files.forEach(file => {
+  const src = fs.readFileSync(path.join(ADDON, file), 'utf8');
+  (src.match(/function\s+[\w.]+[:.](\w+)\s*\(/g) || []).forEach(m => OWN.add(m.match(/[:.](\w+)\s*\($/)[1]));
+  (src.match(/[.](\w+)\s*=\s*(function|K\.\w+)/g) || []).forEach(m => OWN.add(m.match(/^[.](\w+)/)[1]));
+});
 files.forEach(file => {
   const raw = strip(fs.readFileSync(path.join(ADDON, file), 'utf8'));
   // templates and events are inside strings: look at them before the strings are blanked
@@ -62,7 +69,7 @@ files.forEach(file => {
     say(file, 'global "' + name + '" is not in the Forever client (line ' + code.slice(0, m.index).split('\n').length + ')');
   }
   // methods called on frames, font strings and textures
-  const own = new Set(['sync', 'gsub', 'find', 'match', 'sub', 'lower', 'gmatch', 'format', 'rep', 'byte', 'AddMessage',
+  const own = new Set(['gsub', 'find', 'match', 'sub', 'lower', 'upper', 'gmatch', 'format', 'rep', 'byte', 'reverse', 'len', 'AddMessage', ...OWN,
     'SetBackdrop', 'SetBackdropColor', 'SetBackdropBorderColor']);   // from BackdropTemplate (a Lua mixin, on the Mixins list); only called behind 'if frame.SetBackdrop'
   const ms = new Set();
   (code.match(/:([A-Za-z_]\w*)\s*\(/g) || []).forEach(c => ms.add(c.slice(1).replace(/\s*\($/, '')));

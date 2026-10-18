@@ -55,6 +55,10 @@ host.run('local g = __ADDON_NS.games.shard.obj; g.picked = nil; g:leaveShop(); g
 host.run('local g = __ADDON_NS.games.shard.obj; g:startBlind(); g.run.blind.hands = 1; local h = g.run.blind.hand; g.selected = { [h[1].id] = true }; g:afterSelect(); g:playSelected()');
 host.advance(6); check('run over');
 host.run('local g = __ADDON_NS.games.shard.obj; g:confirmNewRun()'); host.advance(0.2); check('confirm');
+host.run('__ADDON_NS.games.shard.obj.confirmPanel:Hide(); __ADDON_NS.open("juggler")'); host.advance(0.3); check('juggler start');
+host.run('local g = __ADDON_NS.games.juggler.obj; g:start(); g:castOn("baneOfAgony", 1)'); host.advance(40); check('juggler round');
+host.run('__ADDON_NS.toggleHelp()'); host.advance(0.2); check('juggler help'); host.run('__ADDON_NS.toggleHelp()');
+host.advance(55); check('juggler results');
 if (host.errors.length) { console.log('FAIL: Lua error\n' + host.errors.join('\n')); process.exit(1); }
 if (problems.size) { console.log('CHECK (' + problems.size + '):\n  ' + [...problems].join('\n  ')); process.exit(1); }
 console.log('OK: every screen fits');

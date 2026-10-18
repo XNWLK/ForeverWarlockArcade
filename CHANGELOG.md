@@ -1,0 +1,10 @@
+# Changelog
+
+## v0.1.0
+- The arcade: a game picker, in the browser and as an addon (`/arcade` in the game).
+- **Shard & Mult**, a poker-hand roguelike with Warlock spells: Shadow Bolt, Corruption, Immolate and Incinerate are
+  the suits, J/Q/K are demons, talents are your jokers, Molten Core bosses are the blinds and Ragnaros waits at ante 8.
+  Cards crit with the real spell crit of the Forever Warlock Sim's standard character. Your run is saved.
+- **DoT Juggler**: keep Corruption, Bane of Agony and Immolate ticking on up to six training dummies for 90 seconds.
+  Real cast times, global cooldown, spell queue, mana, damage per tick and Life Tap from the sim. Your best DPS is kept.
+- Six more games are on the way.

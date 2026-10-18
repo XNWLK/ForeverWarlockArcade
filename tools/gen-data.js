@@ -76,7 +76,20 @@ const st = WL.computeStats(blank, WL.BASELINE_RACE || 'human', cfg);
 const table = WL.buildSpellTable(blank, st, cfg);
 const sb = table.shadowBolt;
 const character = { gear: cfg.gear.name, sp: st.sp, critPct: Math.round(st.critPct * 100) / 100, hitPct: Math.min(st.hitPct, 99),
-  hastePct: st.hastePct, critMult: sb.critMult, shadowBoltDmg: Math.round(sb.directDmg), shadowBoltCast: sb.cast };
+  hastePct: st.hastePct, critMult: sb.critMult, shadowBoltDmg: Math.round(sb.directDmg), shadowBoltCast: sb.cast,
+  maxMana: Math.round(st.maxMana), maxHealth: Math.round(st.maxHealth), mp5: st.mp5, spi: Math.round(st.spi),
+  gcd: cfg.combat.gcd, tapMana: Math.round(WL.SPELLS.lifeTap.manaBase + st.spi), tapHealth: WL.SPELLS.lifeTap.healthCost };
+// the spells as the standard character casts them (the sim's spell table: cast time, cost, damage per tick)
+const castTable = {};
+['shadowBolt', 'corruption', 'baneOfAgony', 'immolate', 'incinerate', 'searingPain', 'conflagrate', 'shadowburn', 'drainLife', 'deathCoil'].forEach(k => {
+  const x = table[k], s = WL.SPELLS[k];
+  if (!x) return;
+  const o = { cast: x.cast, cost: Math.round(x.cost) };
+  if (x.directDmg) o.direct = Math.round(x.directDmg);
+  if (x.tickDmg) { o.tick = Math.round(x.tickDmg * 10) / 10; o.ticks = x.ticks; o.every = s.tickEvery; o.duration = s.duration; }
+  if (s.cd) o.cd = s.cd;
+  castTable[k] = o;
+});
 const PETS = { imp: { name: 'Imp', spell: 688 }, voidwalker: { name: 'Voidwalker', spell: 697 }, succubus: { name: 'Succubus', spell: 712 }, felhunter: { name: 'Felhunter', spell: 691 } };
 
 // consumables the games hand out: name, item id (or spell id for the warlock's own stones), the sim's text
@@ -98,6 +111,7 @@ out.push('A.TALENTS = ' + lua(talents));
 out.push('A.PETS = ' + lua(PETS));
 out.push('A.CONSUMABLES = ' + lua(consumables));
 out.push('A.CHARACTER = ' + lua(character));
+out.push('A.CAST = ' + lua(castTable));
 out.push('');
 fs.writeFileSync(path.join(ROOT, 'WarlockArcade', 'Data.lua'), out.join('\n'));
 

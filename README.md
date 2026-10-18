@@ -1,3 +1,5 @@
+<img src="art/logo.svg" width="96" align="right" alt="">
+
 # Forever Warlock Arcade
 
 Little Warlock games for **WoW: Forever**. Play them **in the browser** or **in the game** as an addon: the same games, from the same code.
@@ -11,7 +13,7 @@ The games use real numbers from the [Forever Warlock Sim](https://xnwlk.github.i
 | Game | What it is | State |
 |---|---|---|
 | **Shard & Mult** | A poker-hand roguelike. The suits are Shadow Bolt, Corruption, Immolate and Incinerate, J/Q/K are demons, talents are your jokers, Molten Core bosses are the blinds and Ragnaros waits at ante 8. | Playable |
-| DoT Juggler | Keep your DoTs ticking on every dummy. | Coming soon |
+| **DoT Juggler** | Training dummies keep arriving: keep Corruption, Bane of Agony and Immolate ticking on as many as you can for 90 seconds, with real cast times, global cooldown, mana, damage per tick and Life Tap. | Playable |
 | Higher or Lower | Which build sims higher? | Coming soon |
 | Warlockle | A daily guessing puzzle. | Coming soon |
 | Warlock Ware | Micro-games of a few seconds each. | Coming soon |

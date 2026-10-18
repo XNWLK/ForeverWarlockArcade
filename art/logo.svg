@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400">
+  <!-- Forever Warlock Arcade: two playing cards, a soul shard on the front one -->
+  <defs>
+    <linearGradient id="shard" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#E9B8FF"/>
+      <stop offset="0.45" stop-color="#A855F0"/>
+      <stop offset="1" stop-color="#4A1677"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#B02EE0" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#B02EE0" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="2"/></filter>
+  </defs>
+  <rect width="400" height="400" fill="#15121D"/>
+  <!-- back card (fire) -->
+  <g transform="rotate(-14 200 210)">
+    <rect x="96" y="70" width="170" height="240" rx="16" fill="#EDE3CF" stroke="#E36A24" stroke-width="8"/>
+    <text x="114" y="118" font-family="Georgia, serif" font-size="44" font-weight="bold" fill="#8A3410">A</text>
+    <circle cx="181" cy="200" r="38" fill="#E36A24" opacity="0.9"/>
+    <circle cx="181" cy="200" r="22" fill="#FFC14A"/>
+  </g>
+  <!-- front card (shadow) -->
+  <g transform="rotate(10 200 210)">
+    <rect x="140" y="92" width="170" height="240" rx="16" fill="#EDE3CF" stroke="#8E52E6" stroke-width="8"/>
+    <text x="158" y="140" font-family="Georgia, serif" font-size="44" font-weight="bold" fill="#4A2A80">K</text>
+    <circle cx="225" cy="220" r="78" fill="url(#glow)"/>
+    <polygon points="225,150 258,206 236,292 214,292 192,206" fill="url(#shard)" stroke="#2A0E48" stroke-width="5" stroke-linejoin="round"/>
+    <polygon points="225,150 236,206 225,292 214,206" fill="#F3DAFF" opacity="0.35"/>
+    <polygon points="258,206 192,206 225,222" fill="#2A0E48" opacity="0.25"/>
+  </g>
+  <!-- sparks -->
+  <g filter="url(#soft)" fill="#E070FF">
+    <circle cx="318" cy="96" r="7"/><circle cx="84" cy="318" r="5"/><circle cx="336" cy="300" r="4"/>
+  </g>
+</svg>
