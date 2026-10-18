@@ -14,7 +14,7 @@
   html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text); overflow: hidden;
     font: 13px/1.3 'Roboto Condensed', 'Arial Narrow', sans-serif; }
   body { display: flex; flex-direction: column; background: radial-gradient(ellipse at 50% 30%, #1a1024 0%, #07050b 70%); }
-  #stage { position: relative; flex: 1; overflow: hidden; touch-action: manipulation; user-select: none; -webkit-user-select: none; }
+  #stage { position: relative; flex: 1; overflow: hidden; touch-action: none; user-select: none; -webkit-user-select: none; }
   .wow-ui { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
   .wow-ui > div { position: absolute; box-sizing: border-box; pointer-events: none; }
   .wow-ui > .wow-frame { pointer-events: auto; }
@@ -47,11 +47,25 @@
   <a href="https://www.curseforge.com/wow/addons/xns-warlock-sim" target="_blank" rel="noopener">Sim addon</a>
 </footer>
 <noscript><p style="position:fixed;top:40%;width:100%;text-align:center">The arcade needs JavaScript.</p></noscript>
-<script src="web/fengari.js"></script>
-<script src="web/wow-core.js"></script>
-<script src="web/wow-dom.js"></script>
-<script src="web/sound.js"></script>
-<script src="web/icons.js"></script>
-<script>WowDom.start({ addon: 'WarlockArcade', version: '0.1.0' });</script>
+<script>
+// Loads the page's scripts with this build's fingerprint (web/build.txt, always read fresh), so a browser that has
+// an older version cached never mixes old and new files.
+(function () {
+  var list = ['web/fengari.js', 'web/wow-core.js', 'web/wow-dom.js', 'web/sound.js', 'web/icons.js'];
+  function go(v) {
+    (function next(i) {
+      if (i >= list.length) { WowDom.start({ addon: 'WarlockArcade', version: v }); return; }
+      var s = document.createElement('script');
+      s.src = list[i] + '?v=' + v;
+      s.onload = function () { next(i + 1); };
+      s.onerror = function () { document.getElementById('loading').textContent = 'Could not load the arcade - please reload the page.'; };
+      document.body.appendChild(s);
+    })(0);
+  }
+  fetch('web/build.txt', { cache: 'no-store' })
+    .then(function (r) { return r.ok ? r.text() : String(Date.now()); })
+    .then(function (t) { go(t.trim()); }, function () { go(String(Date.now())); });
+})();
+</script>
 </body>
 </html>

@@ -237,6 +237,12 @@
       else if (host.hitTest(p.x, p.y) === id) host.script(id, 'OnClick', downBtn);
       if (touchHover) { setHover(0); touchHover = false; }
     });
+    // the browser took the touch over (a scroll, a long press): nothing is pressed any more
+    window.addEventListener('pointercancel', () => {
+      if (downId) host.script(downId, 'OnMouseUp', downBtn);
+      downId = 0; dragging = false;
+      if (touchHover) { setHover(0); touchHover = false; }
+    });
     ui.addEventListener('contextmenu', e => e.preventDefault());
     ui.addEventListener('wheel', e => {
       const p = toUi(e);
