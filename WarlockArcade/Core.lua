@@ -118,6 +118,10 @@ local function build()
     elseif A.current and A.current.obj.OnKey then used = A.current.obj:OnKey(key) and true or false end
     if not InCombatLockdown() then self:SetPropagateKeyboardInput(not used) end
   end)
+  -- letting go of a key (hold notes in Tap Tap DPS)
+  W:SetScript('OnKeyUp', function(self, key)
+    if A.current and A.current.obj.OnKeyUp then A.current.obj:OnKeyUp(key) end
+  end)
   W:SetScript('OnUpdate', function(_, dt) if A.current and A.current.obj.OnUpdate then A.current.obj:OnUpdate(dt) end end)
   W:SetScript('OnHide', function() GameTooltip:Hide(); if A.current and A.current.obj.OnPause then A.current.obj:OnPause() end end)
 
