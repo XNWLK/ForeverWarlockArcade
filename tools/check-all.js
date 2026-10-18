@@ -1,7 +1,7 @@
 // Runs every check in turn and stops at the first that fails.
 //   node tools/check-all.js
 const { execFileSync } = require('child_process'), path = require('path');
-const checks = [['check-api.js'], ['check-layout.js'], ['check-shard.js', '20'], ['check-juggler.js', '4'], ['check-higher.js', '20']];
+const checks = [['check-api.js'], ['check-layout.js'], ['check-shard.js', '20'], ['check-juggler.js', '4'], ['check-higher.js', '20'], ['check-warlockle.js', '200']];
 for (const [file, ...args] of checks) {
   process.stdout.write(file + ': ');
   try { process.stdout.write(execFileSync('node', [path.join(__dirname, file), ...args], { encoding: 'utf8' }).trim().split('\n').slice(-2).join(' | ') + '\n'); }

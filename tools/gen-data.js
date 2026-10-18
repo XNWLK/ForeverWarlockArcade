@@ -66,7 +66,7 @@ Object.keys(WL.SPELLS).forEach(k => {
 const talents = {};
 WL.TALENTS.forEach(t => {
   const n = nodes[t.wid], texts = WL.TALENT_TEXT && WL.TALENT_TEXT[t.key];
-  talents[t.key] = { name: t.name, tree: t.tree, ranks: t.ranks, spell: n ? n.ranks[t.ranks - 1] || n.ranks[0] : undefined,
+  talents[t.key] = { name: t.name, tree: t.tree, ranks: t.ranks, row: t.row, col: t.col, req: t.req, spell: n ? n.ranks[t.ranks - 1] || n.ranks[0] : undefined,
     text: texts ? texts[texts.length - 1] : undefined, v: t.v };
 });
 // the sim's standard character with no talents, no pet: the base numbers of the games
@@ -133,6 +133,7 @@ out.push('local ADDON, A = ...');
 out.push('A.SIM_COMMIT = ' + str(commit));
 out.push('A.SPELLS = ' + lua(spells));
 out.push('A.TALENTS = ' + lua(talents));
+out.push('A.TALENT_ORDER = ' + lua(WL.TALENTS.map(t => t.key)));
 out.push('A.PETS = ' + lua(PETS));
 out.push('A.CONSUMABLES = ' + lua(consumables));
 out.push('A.CHARACTER = ' + lua(character));
