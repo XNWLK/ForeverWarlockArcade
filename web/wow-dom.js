@@ -206,7 +206,7 @@
     }
     function setHover(id) {
       if (id === host.hover) return;
-      const old = host.hover; host.hover = id;
+      const old = host.hover; host.hover = id; host.touch();
       if (old) host.script(old, 'OnLeave');
       if (id) host.script(id, 'OnEnter', false);
       ui.style.cursor = id && host.call('__webIsButton', id) ? 'pointer' : '';

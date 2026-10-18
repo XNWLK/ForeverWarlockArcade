@@ -95,7 +95,8 @@ function G:build()
     b:SetScript('OnClick', function(btn) self:guess(btn.key) end)
     b:SetScript('OnEnter', function(btn)
       local done = self.s and self:guessed(btn.key)
-      K.showTip(btn, { { A.TALENTS[btn.key].name, { 1, 1, 1 } }, { done and 'Already guessed' or 'Click to guess', done and C.faint or C.gold } }, 'ANCHOR_RIGHT')
+      local over = self.s and self.s.done
+      K.showTip(btn, { { A.TALENTS[btn.key].name, { 1, 1, 1 } }, { over and 'Puzzle finished - try Practice' or done and 'Already guessed' or 'Click to guess', (done or over) and C.faint or C.gold } }, 'ANCHOR_RIGHT')
     end)
     b:SetScript('OnLeave', function() GameTooltip:Hide() end)
     self.icons[key] = b
@@ -223,7 +224,15 @@ function G:guess(key)
   local s = self.s
   if not s then return end
   local ok, why = W.guess(s, key)
-  if not ok then return end
+  if not ok then
+    -- say why nothing happened, so the list never seems dead
+    if s.done then
+      self.msg2:SetText(s.daily and 'Today\'s talent is done - click Practice for another one' or 'This one is done - click Practice for a new one')
+      self.practiceBtn:SetStyle('orange')
+    else self.msg2:SetText(A.TALENTS[key].name .. ': ' .. (why or 'already guessed')) end
+    A.sound('select')
+    return
+  end
   A.sound(s.won and 'win' or s.done and 'lose' or 'click')
   if s.done and s.daily and not s.counted then
     s.counted = true

@@ -253,7 +253,7 @@
         if (n.visPass === pass) return n.vis;
         const p = n.parent ? this.nodes.get(n.parent) : null;
         const pv = p ? vis(p) : true;
-        n.vis = pv && n.shown; n.ealpha = (p ? p.ealpha : 1) * n.alpha; n.visPass = pass;
+        n.vis = pv && n.shown && (n.layer !== 5 || (n.kind !== 'tex' && n.kind !== 'font') || this.hover === n.parent); n.ealpha = (p ? p.ealpha : 1) * n.alpha; n.visPass = pass;   // HIGHLIGHT layer: only while the mouse is over its frame, like the game
         // strata: the frame's own or its parent's
         const f = this.frameOf(n);
         n.estrata = n.kind === 'tex' || n.kind === 'font' ? (f ? f.estrata : 3) : (n.strata || (p ? p.estrata : 3) || 3);
