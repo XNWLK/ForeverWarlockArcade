@@ -13,4 +13,5 @@ Core.lua
 Games\ShardRules.lua
 Games\ShardUI.lua
 Games\Juggler.lua
+Games\HigherLower.lua
 Games\Coming.lua

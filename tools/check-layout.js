@@ -70,6 +70,12 @@ host.run('__ADDON_NS.games.shard.obj.confirmPanel:Hide(); __ADDON_NS.open("juggl
 host.run('local g = __ADDON_NS.games.juggler.obj; g:start(); g:castOn("baneOfAgony", 1)'); host.advance(40); check('juggler round');
 host.run('__ADDON_NS.toggleHelp()'); host.advance(0.2); check('juggler help'); host.run('__ADDON_NS.toggleHelp()');
 host.advance(55); check('juggler results');
+host.run('__ADDON_NS.open("higher")'); host.advance(0.3); check('higher start');
+for (let i = 0; i < 12; i++) {
+  host.run('math.randomseed(' + i + '); __ADDON_NS.games.higher.obj:start()'); host.advance(0.2); check('higher round');
+  host.run('local g = __ADDON_NS.games.higher.obj; local s = g.s; g:guess(s.right.value >= s.left.value and "lower" or "higher")');
+  host.advance(0.3); check('higher wrong'); host.advance(2); check('higher over');
+}
 if (host.errors.length) { console.log('FAIL: Lua error\n' + host.errors.join('\n')); process.exit(1); }
 if (problems.size) { console.log('CHECK (' + problems.size + '):\n  ' + [...problems].join('\n  ')); process.exit(1); }
 console.log('OK: every screen fits');
