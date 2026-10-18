@@ -15,6 +15,17 @@ function check(screen) {
     if ((n.kind === 'font' && n.text) || n.kind === 'tex' || n.mouse) {
       if (win && n.id !== win.id && !inside(n.rect, win.rect) && n.rect.w > 0) report(screen, 'outside the window: ' + (n.kind === 'font' ? '"' + n.parsed.plain.slice(0, 40) + '"' : n.kind + ' ' + n.id));
     }
+    // a button the mouse cannot reach: something else takes the click at its middle
+    if (n.kind === 'button' && n.mouse && n.rect.w > 4) {
+      const top = host.hitTest(n.rect.l + n.rect.w / 2, n.rect.b + n.rect.h / 2);
+      let p = top; while (p && p !== n.id) { const q = host.node(p); p = q && q.parent; }
+      // only a frame that holds the button counts (a panel above its own button); a window open over others is fine
+      let a = n.parent, ancestor = false; while (a) { if (a === top) { ancestor = true; break; } const q = host.node(a); a = q && q.parent; }
+      if (p !== n.id && ancestor) {
+        const label = [...host.nodes.values()].find(x => x.kind === 'font' && x.parent === n.id && x.vis && x.text);
+        report(screen, 'button covered by another frame: ' + (label ? '"' + label.parsed.plain + '"' : 'button ' + n.id));
+      }
+    }
     if (n.kind !== 'font' || !n.text) continue;
     const anchoredWide = n.points.some(p => /LEFT/.test(p.p)) && n.points.some(p => /RIGHT/.test(p.p));
     const fixedW = anchoredWide || n.w > 0;

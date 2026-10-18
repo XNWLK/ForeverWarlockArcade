@@ -10,6 +10,12 @@ const DRIVER = `
 local A = __ADDON_NS
 local R, K = A.ShardRules, A.Kit
 BOT = {}
+-- a click the way the mouse does it: fails if another frame covers the middle of the button
+function CLICK(b)
+  local top = __web.topAt(b.__id)
+  if top ~= b.__id then error("button covered by another frame (" .. tostring(top) .. "): " .. tostring(b.label and b.label:GetText() or b.__id), 2) end
+  b:Click()
+end
 function BOT.game() return A.games.shard.obj end
 local function combos(list, k, start, cur, out)
   if #cur == k then local t = {}; for i, c in ipairs(cur) do t[i] = c end; out[#out + 1] = t; return end
@@ -35,10 +41,10 @@ end
 function BOT.step()
   local g = BOT.game()
   if g:busy() then return 'busy' end
-  if g.cashPanel:IsShown() then g.cashPanel.go:Click(); return 'collect' end
-  if g.confirmPanel:IsShown() then g.confirmPanel.no:Click(); return 'confirm' end
+  if g.cashPanel:IsShown() then CLICK(g.cashPanel.go); return 'collect' end
+  if g.confirmPanel:IsShown() then CLICK(g.confirmPanel.no); return 'confirm' end
   local run = g.run
-  if run.phase == 'select' then g.selectPanel.cols[run.blindIndex].go:Click(); return 'fight' end
+  if run.phase == 'select' then CLICK(g.selectPanel.cols[run.blindIndex].go); return 'fight' end
   if run.phase == 'blind' then
     local set, v = BOT.best(run)
     local b = run.blind
@@ -54,13 +60,13 @@ function BOT.step()
       else for _, c in ipairs(set) do keep[c.id] = true end end
       local n = 0
       for i = #b.hand, 1, -1 do local c = b.hand[i]; if not keep[c.id] and n < 5 then g.selected[c.id] = true; n = n + 1 end end
-      if n > 0 then g:afterSelect(); g.discard:Click(); return 'discard' end
+      if n > 0 then g:afterSelect(); CLICK(g.discard); return 'discard' end
     end
     for _, c in ipairs(set) do g.selected[c.id] = true end
     g:afterSelect()
     -- sometimes use a consumable on the picked cards first
-    if run.items[1] then g.picked = { kind = 'item', i = 1 }; g:refreshSlots(); g.slotAction2:Click() end
-    g.play:Click()
+    if run.items[1] then g.picked = { kind = 'item', i = 1 }; g:refreshSlots(); CLICK(g.slotAction2) end
+    CLICK(g.play)
     return 'play'
   end
   if run.phase == 'shop' then
@@ -68,14 +74,14 @@ function BOT.step()
     -- talents first, then a grimoire for the hand played most, the odd consumable; keep 5+ gold for interest late on
     local most, mostN = 'pair', -1
     for k, n in pairs(run.played) do if n > mostN then most, mostN = k, n end end
-    for _, o in ipairs({ s.t1, s.t2 }) do if o.buy:IsShown() and o.buy:IsEnabled() then o.buy:Click() end end
+    for _, o in ipairs({ s.t1, s.t2 }) do if o.buy:IsShown() and o.buy:IsEnabled() then CLICK(o.buy) end end
     for i, o in ipairs({ s.i1, s.i2 }) do
       local it = run.shop.items[i]
-      if o.buy:IsShown() and o.buy:IsEnabled() and ((it.kind == 'grimoire' and it.hand == most) or (it.kind == 'item' and math.random() < 0.3)) then o.buy:Click() end
+      if o.buy:IsShown() and o.buy:IsEnabled() and ((it.kind == 'grimoire' and it.hand == most) or (it.kind == 'item' and math.random() < 0.3)) then CLICK(o.buy) end
     end
-    if #run.talents >= 5 and math.random() < 0.1 then g.picked = { kind = 'talent', i = math.random(1, 5) }; g:refreshSlots(); g.slotAction:Click() end
-    if run.gold >= 14 and s.reroll:IsEnabled() then s.reroll:Click(); return 'reroll' end
-    s.next:Click()
+    if #run.talents >= 5 and math.random() < 0.1 then g.picked = { kind = 'talent', i = math.random(1, 5) }; g:refreshSlots(); CLICK(g.slotAction) end
+    if run.gold >= 14 and s.reroll:IsEnabled() then CLICK(s.reroll); return 'reroll' end
+    CLICK(s.next)
     return 'next'
   end
   if run.phase == 'over' or run.phase == 'victory' then return run.phase end

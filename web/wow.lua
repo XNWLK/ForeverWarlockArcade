@@ -204,7 +204,11 @@ function Frame:EnableKeyboard(v) N.keyboard(self.__id, v and true or false) end
 function Frame:SetPropagateKeyboardInput(v) N.propagate(self.__id, v and true or false) end
 function Frame:SetFrameStrata(s) if not STRATA[s] then error('SetFrameStrata: unknown strata ' .. tostring(s), 2) end; self.__strata = s; N.strata(self.__id, STRATA[s]) end
 function Frame:GetFrameStrata() local o = self; while o do if o.__strata then return o.__strata end; o = o.__parent end; return 'MEDIUM' end
-function Frame:SetFrameLevel(l) num(l, 'SetFrameLevel'); self.__level = l; N.level(self.__id, l) end
+-- like the game: child frames are kept above their parent when the parent is raised
+function Frame:SetFrameLevel(l)
+  num(l, 'SetFrameLevel'); self.__level = l; N.level(self.__id, l)
+  for _, c in ipairs(self.__children or {}) do if c.__frame and (c.__level or 0) <= l then c:SetFrameLevel(l + 1) end end
+end
 function Frame:GetFrameLevel() return self.__level end
 function Frame:Raise() end
 function Frame:Lower() end

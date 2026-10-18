@@ -174,6 +174,11 @@
           return c.x >= r.l && c.x <= r.l + r.w && c.y >= r.b && c.y <= r.b + r.h;
         },
         cursor() { return [H.cursor.x, H.cursor.y]; },
+        // which frame the mouse would reach at the middle of this one (for the checks: is a button covered?)
+        topAt(id) {
+          const n = H.nodes.get(id); H.layout(); if (!n || !n.rect) return 0;
+          return H.hitTest(n.rect.l + n.rect.w / 2, n.rect.b + n.rect.h / 2);
+        },
         mod(k) { return !!H.mods[k]; },
         now() { return H.o.now(); },
         epoch() { return Date.now() / 1000; },

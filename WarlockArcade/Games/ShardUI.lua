@@ -277,10 +277,10 @@ end
 
 function G:buildPanels()
   local f = self.f
-  local function panel(w, h)
+  local function panel(w, h, level)
     local p = K.box(f, w, h, { 0.07, 0.05, 0.1, 0.97 }, C.line, 1)
     p:SetPoint('TOP', f, 'TOPLEFT', MAIN_X + MAIN_W / 2, -162)
-    p:SetFrameLevel(f:GetFrameLevel() + 30)
+    p:SetFrameLevel(f:GetFrameLevel() + (level or 30))   -- before the children are made, so they sit on it
     p:EnableMouse(true)
     p.title = K.text(p, 20, C.gold, 'CENTER', K.FONT_TITLE)
     p.title:SetPoint('TOP', 0, -12)
@@ -335,7 +335,7 @@ function G:buildPanels()
   shop.note:SetText('Click a talent at the top to sell it. Grimoires level up a poker hand as soon as you buy them.')
   self.shopPanel = shop
   -- cash out
-  local cash = panel(420, 300)
+  local cash = panel(420, 300, 35)
   cash.title:SetText('Victory')
   cash.lines = {}
   for i = 1, 6 do
@@ -345,7 +345,6 @@ function G:buildPanels()
   end
   cash.go = K.button(cash, 200, 40, 'Collect', function() self:collect() end, 'gold', 15)
   cash.go:SetPoint('BOTTOM', 0, 18)
-  cash:SetFrameLevel(f:GetFrameLevel() + 35)
   self.cashPanel = cash
   -- the end of a run
   local over = panel(460, 330)
@@ -373,14 +372,13 @@ function G:buildPanels()
   lv:SetHeight(46 + #R.HANDS * 26 + 54)
   self.levelPanel = lv
   -- are you sure?
-  local q = panel(380, 150)
+  local q = panel(380, 150, 40)
   q.title:SetText('Start a new run?')
   q.body = K.text(q, 13, C.text, 'CENTER'); q.body:SetPoint('TOP', 0, -50); q.body:SetText('The run you are in will be lost.')
   q.yes = K.button(q, 140, 34, 'New run', function() q:Hide(); self:newRun() end, 'red')
   q.yes:SetPoint('BOTTOMLEFT', 30, 16)
   q.no = K.button(q, 140, 34, 'Keep playing', function() q:Hide() end, 'normal')
   q.no:SetPoint('BOTTOMRIGHT', -30, 16)
-  q:SetFrameLevel(f:GetFrameLevel() + 40)
   self.confirmPanel = q
 end
 
@@ -984,6 +982,10 @@ function G:OnUpdate(dt)
 end
 
 function G:OnKey(key)
+  if self.cashPanel:IsShown() then
+    if (key == 'ENTER' or key == 'SPACE') and not self:busy() then self:collect(); return true end
+    return false
+  end
   if self.confirmPanel:IsShown() or self.levelPanel:IsShown() then
     if key == 'ESCAPE' and A.WEB then self.confirmPanel:Hide(); self.levelPanel:Hide(); return true end
     return false

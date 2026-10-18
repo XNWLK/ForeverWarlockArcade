@@ -445,7 +445,7 @@ function R.win(run)
   local lines = {}
   local total = 0
   local function add(label, n) if n > 0 then lines[#lines + 1] = { label, n }; total = total + n end end
-  add(b.info.name .. ' defeated', b.info.reward)
+  add('Reward for the blind', b.info.reward)
   add('Hands left (' .. b.hands .. ')', b.hands)
   add('Interest (1 per 5 gold, up to 5)', min(5, floor(run.gold / 5)))
   add('Soul Harvesting', R.sumMod(run, 'endGold'))
