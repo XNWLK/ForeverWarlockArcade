@@ -88,6 +88,11 @@ for (let i = 0; i < 9; i++) {
   host.run('local g = __ADDON_NS.games.ware.obj; if g.m then g.m.result = "win" end'); host.advance(1);
 }
 host.run('local g = __ADDON_NS.games.ware.obj; g.lifeLeft = 1; if g.m then g.m.result = "lose" end'); host.advance(3); check('ware over');
+host.run('__ADDON_NS.open("pegs")'); host.advance(0.3); check('pegs start');
+host.run('local g = __ADDON_NS.games.pegs.obj; g:overlayGo(); g:shoot()'); host.advance(1); check('pegs shot');
+host.run('local g = __ADDON_NS.games.pegs.obj; g.s.balls = 0'); host.advance(15); check('pegs over');
+host.run('local g = __ADDON_NS.games.pegs.obj; g.s.orangeHit = g.s.orangeTotal; g:showOverlay("cleared")'); host.advance(0.2); check('pegs cleared');
+for (let l = 2; l <= 4; l++) { host.run('local g = __ADDON_NS.games.pegs.obj; g:overlayGo()'); host.advance(0.3); check('pegs level ' + l); host.run('local g = __ADDON_NS.games.pegs.obj; g:showOverlay("cleared")'); }
 if (host.errors.length) { console.log('FAIL: Lua error\n' + host.errors.join('\n')); process.exit(1); }
 if (problems.size) { console.log('CHECK (' + problems.size + '):\n  ' + [...problems].join('\n  ')); process.exit(1); }
 console.log('OK: every screen fits');

@@ -16,4 +16,5 @@ Games\Juggler.lua
 Games\HigherLower.lua
 Games\Warlockle.lua
 Games\Ware.lua
+Games\Pegs.lua
 Games\Coming.lua
