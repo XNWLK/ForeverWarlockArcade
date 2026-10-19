@@ -249,11 +249,14 @@
       };
       for (const n of this.nodes.values()) rectOf(n);
       // visibility, alpha and drawing order
+      const cut = (a, b) => { if (!a) return b; const l = Math.max(a.l, b.l), bb = Math.max(a.b, b.b); return { l, b: bb, w: Math.max(0, Math.min(a.l + a.w, b.l + b.w) - l), h: Math.max(0, Math.min(a.b + a.h, b.b + b.h) - bb) }; };
       const vis = (n) => {
         if (n.visPass === pass) return n.vis;
         const p = n.parent ? this.nodes.get(n.parent) : null;
         const pv = p ? vis(p) : true;
-        n.vis = pv && n.shown && (n.layer !== 5 || (n.kind !== 'tex' && n.kind !== 'font') || this.hover === n.parent); n.ealpha = (p ? p.ealpha : 1) * n.alpha; n.visPass = pass;   // HIGHLIGHT layer: only while the mouse is over its frame, like the game
+        n.vis = pv && n.shown && (n.layer !== 5 || (n.kind !== 'tex' && n.kind !== 'font') || this.hover === n.parent); n.ealpha = (p ? p.ealpha : 1) * n.alpha; n.visPass = pass;
+        // SetClipsChildren: everything under a clipping frame is cut to its box (and to any clipping frame above it)
+        n.clipr = p ? (p.clip && p.rect ? cut(p.clipr, p.rect) : p.clipr) : null;   // HIGHLIGHT layer: only while the mouse is over its frame, like the game
         // strata: the frame's own or its parent's
         const f = this.frameOf(n);
         n.estrata = n.kind === 'tex' || n.kind === 'font' ? (f ? f.estrata : 3) : (n.strata || (p ? p.estrata : 3) || 3);
@@ -296,6 +299,8 @@
       for (const n of this.nodes.values()) {
         if (!n.mouse || !n.vis || !n.rect || n.kind === 'root') continue;
         const r = n.rect;
+        const c = n.clipr;
+        if (c && !(x >= c.l && x <= c.l + c.w && y >= c.b && y <= c.b + c.h)) continue;
         if (x >= r.l && x <= r.l + r.w && y >= r.b && y <= r.b + r.h && (!best || n.z > best.z || (n.z === best.z && n.id > best.id))) best = n;
       }
       return best ? best.id : 0;

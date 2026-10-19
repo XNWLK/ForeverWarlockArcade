@@ -1,6 +1,6 @@
 ## Interface: 16001
 ## Title: Forever Warlock Arcade
-## Notes: Eight little Warlock games on the Forever Warlock Sim's numbers. Type /arcade
+## Notes: Little Warlock games on the Forever Warlock Sim's numbers. Type /arcade
 ## Author: Xn
 ## Version: 0.1.0
 ## X-Website: https://github.com/XNWLK/ForeverWarlockArcade
@@ -19,3 +19,4 @@ Games\Ware.lua
 Games\Pegs.lua
 Games\TapTap.lua
 Games\Merge.lua
+Games\Circles.lua

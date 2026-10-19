@@ -7,13 +7,15 @@ const host = boot();
 const problems = new Set(), seen = new Set();
 const report = (screen, what) => { if (!seen.has(what)) { seen.add(what); problems.add(screen + ': ' + what); } };
 function inside(r, w) { return r.l >= w.l - 1 && r.b >= w.b - 1 && r.l + r.w <= w.l + w.w + 1 && r.b + r.h <= w.b + w.h + 1; }
+function clipped(a, b) { const l = Math.max(a.l, b.l), bb = Math.max(a.b, b.b); return { l, b: bb, w: Math.max(0, Math.min(a.l + a.w, b.l + b.w) - l), h: Math.max(0, Math.min(a.b + a.h, b.b + b.h) - bb) }; }
 function check(screen) {
   host.layout();
   const win = [...host.nodes.values()].find(n => n.kind === 'frame' && n.id === host.call('ARCADE_WIN'));
   for (const n of host.nodes.values()) {
     if (!n.vis || !n.rect || n.ealpha < 0.05) continue;
     if ((n.kind === 'font' && n.text) || n.kind === 'tex' || n.mouse) {
-      if (win && n.id !== win.id && !inside(n.rect, win.rect) && n.rect.w > 0) report(screen, 'outside the window: ' + (n.kind === 'font' ? '"' + n.parsed.plain.slice(0, 40) + '"' : n.kind + ' ' + n.id));
+      const shown = n.clipr ? clipped(n.rect, n.clipr) : n.rect;   // what a clipping frame (SetClipsChildren) leaves of it
+      if (win && n.id !== win.id && shown.w > 0 && shown.h > 0 && !inside(shown, win.rect) && n.rect.w > 0) report(screen, 'outside the window: ' + (n.kind === 'font' ? '"' + n.parsed.plain.slice(0, 40) + '"' : n.kind + ' ' + n.id));
     }
     // a button the mouse cannot reach: something else takes the click at its middle
     if (n.kind === 'button' && n.mouse && n.rect.w > 4) {
@@ -104,6 +106,11 @@ host.run('local g = __ADDON_NS.games.merge.obj; local M = __ADDON_NS.MergeRules;
 host.advance(0.5); check('merge every demon');
 host.run('local g = __ADDON_NS.games.merge.obj; g:showOverlay("won")'); host.advance(0.2); check('merge won');
 host.run('local g = __ADDON_NS.games.merge.obj; g:showOverlay("over")'); host.advance(0.2); check('merge over');
+host.run('__ADDON_NS.open("circles")'); host.advance(0.3); check('circles start');
+host.run('__ADDON_NS.games.circles.obj:play()'); host.advance(3); check('circles playing'); host.advance(10); check('circles later');
+host.advance(60); check('circles done');
+host.run('local g = __ADDON_NS.games.circles.obj; g.keys[1] = "NUMPAD1"; g.keys[2] = "BACKSPACE"; g:openKeys(); g:startBinding(2)'); host.advance(0.1); check('circles keys');
+host.run('local g = __ADDON_NS.games.circles.obj; g.db.keys = nil; g:loadKeys(); g:closeKeys()');
 host.run('__ADDON_NS.games.merge.obj:newGame(); __ADDON_NS.open(nil)'); host.advance(0.3); check('picker, all games');
 if (host.errors.length) { console.log('FAIL: Lua error\n' + host.errors.join('\n')); process.exit(1); }
 if (problems.size) { console.log('CHECK (' + problems.size + '):\n  ' + [...problems].join('\n  ')); process.exit(1); }

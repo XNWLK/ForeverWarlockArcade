@@ -101,6 +101,8 @@
       css(e, 'width', r.w + 'px'); css(e, 'height', r.h + 'px');
       css(e, 'zIndex', String(n.z));
       css(e, 'opacity', String(n.ealpha));
+      const c = n.clipr;
+      css(e, 'clipPath', c ? 'inset(' + Math.max(0, r.b + r.h - c.b - c.h) + 'px ' + Math.max(0, r.l + r.w - c.l - c.w) + 'px ' + Math.max(0, c.b - r.b) + 'px ' + Math.max(0, c.l - r.l) + 'px)' : '');
       const vkey = n.v + ':' + (n.kind === 'font' ? host.effScale(n) : 0);
       if (e._v === vkey) return;
       e._v = vkey;

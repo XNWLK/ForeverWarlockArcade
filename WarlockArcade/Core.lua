@@ -190,7 +190,9 @@ function A.buildPicker()
   sub:SetPoint('TOP', head, 'BOTTOM', 0, -6)
   sub:SetText('Little Warlock games built on the numbers of the Forever Warlock Sim')
   P.tiles = {}
+  -- 4 tiles a row for up to 8 games, 5 (narrower) for 9 or 10
   local cols, tw, th, gap = 4, 212, 232, 14
+  if #A.order > 8 then cols, tw = 5, 172 end
   local x0 = (A.W - (cols * tw + (cols - 1) * gap)) / 2
   for i, def in ipairs(A.order) do
     local col, row = (i - 1) % cols, floor((i - 1) / cols)

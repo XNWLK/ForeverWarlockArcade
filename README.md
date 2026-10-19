@@ -20,6 +20,7 @@ The games use real numbers from the [Forever Warlock Sim](https://xnwlk.github.i
 | **Shadow Pegs** | Aim and bounce a Shadow Bolt through the pegs; clear every soul shard peg. Pegs deal the real damage of a Corruption tick, a Shadow Bolt and an Immolate. | Playable |
 | **Tap Tap DPS** | The rotation is the song chart: a 120 s fight of the sim's standard character as falling notes. Casts are hold notes - let go early and the cast is interrupted. Your score is the DPS. | Playable |
 | **Demon 2048** | Merge soul shards into Imps, Voidwalkers, Succubi ... all the way to the Demon Lord. | Playable |
+| **Soul Circles** | The same real rotation as Tap Tap DPS, now with aim: click each spell as its ring closes in, hold casts and follow the ball to the end. Your score is the DPS, with a rank from D to SS. | Playable |
 
 ## In the game
 
