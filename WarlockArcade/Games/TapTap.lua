@@ -13,7 +13,17 @@ A.TapTapRules = T
 T.FIGHT = 120
 T.LANES = { 'corruption', 'baneOfAgony', 'immolate', 'shadowBolt' }
 T.LANE_OF = { corruption = 1, baneOfAgony = 2, immolate = 3, shadowBolt = 4 }
-T.KEYS = { 'D', 'F', 'J', 'K' }
+T.KEYS = { 'D', 'F', 'J', 'K', 'SPACE' }   -- the default keys: four lanes, then Life Tap (players can change them)
+-- a key's name as shown on screen ('SPACE' -> 'Space', 'NUMPAD1' -> 'Num 1', 'D' -> 'D')
+local KEY_NAMES = { LSHIFT = 'Shift', RSHIFT = 'Right Shift', LCTRL = 'Ctrl', RCTRL = 'Right Ctrl', LALT = 'Alt', RALT = 'Right Alt' }
+function T.keyLabel(k)
+  if not k then return '-' end
+  if KEY_NAMES[k] then return KEY_NAMES[k] end
+  local n = k:match('^NUMPAD(.+)$')
+  if n then return 'Num ' .. n end
+  if #k > 1 and k:match('^%u+$') then return k:sub(1, 1) .. k:sub(2):lower() end
+  return k
+end
 T.SPEEDS = { { name = 'Easy', x = 2 }, { name = 'Normal', x = 3 }, { name = 'Hard', x = 4 } }
 T.PERFECT, T.GOOD = 0.06, 0.13     -- seconds of song time either side of the note
 T.LEAD = 2                         -- seconds before the first note
@@ -162,6 +172,7 @@ function G.create(parent)
   g.f:SetAllPoints()
   g.db = A.db('taptap')
   g.speedIndex = g.db.speed or 2
+  g:loadKeys()
   g:build()
   g.f:Hide()
   return g
@@ -186,7 +197,7 @@ function G:build()
     if i > 1 then local sep = K.rect(l, 'BORDER', C.line, 0.6); sep:SetPoint('TOPLEFT'); sep:SetPoint('BOTTOMLEFT'); sep:SetWidth(1) end
     l.flash = K.rect(l, 'ARTWORK', COL[i], 0); l.flash:SetAllPoints()
     l.ring = l:CreateTexture(nil, 'ARTWORK', nil, 1); l.ring:SetTexture(K.MEDIA .. 'ring'); l.ring:SetSize(58, 58); l.ring:SetPoint('CENTER', l, 'BOTTOM', 0, HIT_Y); l.ring:SetVertexColor(COL[i][1], COL[i][2], COL[i][3], 0.9)
-    l.key = K.text(l, 14, { 1, 1, 1 }, 'CENTER', K.FONT_NUM, 'OUTLINE'); l.key:SetPoint('TOP', l.ring, 'BOTTOM', 0, -6); l.key:SetText(T.KEYS[i])
+    l.key = K.text(l, 14, { 1, 1, 1 }, 'CENTER', K.FONT_NUM, 'OUTLINE'); l.key:SetPoint('TOP', l.ring, 'BOTTOM', 0, -6); l.key:SetText(T.keyLabel(self.keys[i]))
     l.name = K.text(l, 10, C.dim, 'CENTER'); l.name:SetPoint('BOTTOM', 0, 6); l.name:SetText(A.SPELLS[T.LANES[i]].name)
     l.lane = i
     l:RegisterForClicks('LeftButtonUp')
@@ -198,7 +209,7 @@ function G:build()
   self.notePool, self.used = {}, {}
   self.pop = K.popups(self.layer)
   -- Life Tap button (also Space)
-  self.tapBtn = K.button(f, bw, 34, 'Life Tap  (Space)', nil, 'normal', 13)
+  self.tapBtn = K.button(f, bw, 34, 'Life Tap', nil, 'normal', 13)
   self.tapBtn:SetPoint('TOP', board, 'BOTTOM', 0, -8)
   self.tapBtn:SetScript('OnMouseDown', function() self:press(0) end)
   -- side panel
@@ -226,7 +237,101 @@ function G:build()
   note:SetText('The chart is a ' .. T.FIGHT .. ' s fight of the sim\'s standard character, played faster. Hold the notes with a tail until they end - let go early and the cast is interrupted.')
   self.start = K.button(side, 262, 40, 'Play', function() self:play() end, 'orange', 16)
   self.start:SetPoint('BOTTOMLEFT', 14, 14)
+  self.keysBtn = K.button(f, 290, 34, 'Change keys', function() self:openKeys() end, 'normal', 13)
+  self.keysBtn:SetPoint('TOPLEFT', side, 'BOTTOMLEFT', 0, -8)
+  self:buildKeys()
+  self:refreshKeys()
   self:refreshSide()
+end
+
+-- the keys: self.keys[1..4] are the lanes, [5] Life Tap; saved in db.keys once changed
+function G:loadKeys()
+  self.keys = {}
+  local saved = type(self.db.keys) == 'table' and self.db.keys or {}
+  for i, k in ipairs(T.KEYS) do self.keys[i] = type(saved[i]) == 'string' and saved[i] or k end
+end
+-- the action (1-4 a lane, 5 Life Tap) a key does: the player's keys first, then 1 2 3 4 for the lanes when free
+function G:actionOf(key)
+  for i, k in ipairs(self.keys) do if k == key then return i end end
+  local d = tonumber(key)
+  if d and d >= 1 and d <= 4 and key == tostring(d) then return d end
+end
+
+local KEY_ROWS = { { 'Lane 1', 'corruption' }, { 'Lane 2', 'baneOfAgony' }, { 'Lane 3', 'immolate' }, { 'Lane 4', 'shadowBolt' }, { 'All lanes', 'lifeTap' } }
+function G:buildKeys()
+  local p = K.box(self.f, 290, BH, { 0.07, 0.05, 0.1, 0.98 }, C.line, 1)
+  p:SetPoint('TOPLEFT', self.side, 'TOPLEFT')
+  p:SetFrameLevel(self.side:GetFrameLevel() + 20)   -- before the children are made, so they sit on it
+  p:EnableMouse(true)
+  local title = K.text(p, 20, C.gold, 'CENTER', K.FONT_TITLE); title:SetPoint('TOP', 0, -12); title:SetText('Keys')
+  local sub = K.text(p, 11, C.dim, 'LEFT'); sub:SetPoint('TOPLEFT', 14, -44); sub:SetPoint('TOPRIGHT', -12, -44); sub:SetWordWrap(true); sub:SetSpacing(2)
+  sub:SetText('Click a key, then press the new one on your keyboard. Escape cancels. 1 2 3 4 also play the lanes while they are free.')
+  p.rows = {}
+  for i, r in ipairs(KEY_ROWS) do
+    local y = -100 - (i - 1) * 52
+    local icon = K.icon(p, 32, A.SPELLS[r[2]].id); icon:SetPoint('TOPLEFT', 14, y)
+    local name = K.text(p, 13, C.text, 'LEFT'); name:SetPoint('TOPLEFT', icon, 'TOPRIGHT', 8, -1); name:SetText(A.SPELLS[r[2]].name)
+    local lane = K.text(p, 10, C.dim, 'LEFT'); lane:SetPoint('TOPLEFT', name, 'BOTTOMLEFT', 0, -3); lane:SetText(r[1])
+    local b = K.button(p, 104, 30, '', function() self:startBinding(i) end, 'normal', 13)
+    b:SetPoint('TOPRIGHT', -14, y - 1)
+    p.rows[i] = b
+  end
+  local def = K.button(p, 124, 32, 'Defaults', function() self.binding = nil; self.db.keys = nil; self:loadKeys(); self.keysPanel.msg:SetText(''); self:refreshKeys(); A.sound('select') end, 'normal', 13)
+  def:SetPoint('BOTTOMLEFT', 14, 14)
+  local done = K.button(p, 124, 32, 'Done', function() self:closeKeys() end, 'blue', 13)
+  done:SetPoint('BOTTOMRIGHT', -14, 14)
+  p.msg = K.text(p, 11, C.flame, 'CENTER'); p.msg:SetPoint('BOTTOMLEFT', 14, 56); p.msg:SetPoint('BOTTOMRIGHT', -14, 56); p.msg:SetWordWrap(true)
+  p:Hide()
+  self.keysPanel = p
+end
+function G:refreshKeys()
+  for i, l in ipairs(self.lanes) do l.key:SetText(T.keyLabel(self.keys[i])) end
+  self.tapBtn:SetLabel('Life Tap  (' .. T.keyLabel(self.keys[5]) .. ')')
+  for i, b in ipairs(self.keysPanel.rows) do
+    if self.binding == i then b:SetLabel('Press a key'); b:SetStyle('gold')
+    else b:SetLabel(T.keyLabel(self.keys[i])); b:SetStyle('normal') end
+  end
+end
+function G:openKeys()
+  if self.s and not self.s.done then return end
+  self.binding = nil
+  self.keysPanel.msg:SetText('')
+  self.keysPanel:Show()
+  self:refreshKeys()
+  A.sound('open')
+end
+function G:closeKeys()
+  self.binding = nil
+  self.keysPanel:Hide()
+  self:refreshKeys()
+end
+function G:startBinding(i)
+  if self.binding == i then self.binding = nil else self.binding = i end
+  self.keysPanel.msg:SetText('')
+  self:refreshKeys()
+  A.sound('select')
+end
+-- a key pressed while waiting for one: it becomes that action's key; an action that had it gets the old key instead
+function G:bindKey(key)
+  local i = self.binding
+  self.binding = nil
+  local msg = ''
+  if key ~= 'ESCAPE' and key ~= self.keys[i] then
+    local old = self.keys[i]
+    for j, k in ipairs(self.keys) do
+      if j ~= i and k == key then
+        self.keys[j] = old
+        msg = T.keyLabel(key) .. ' was on ' .. A.SPELLS[KEY_ROWS[j][2]].name .. ' - that one is now on ' .. T.keyLabel(old)
+      end
+    end
+    self.keys[i] = key
+    local db = {}
+    for j, k in ipairs(self.keys) do db[j] = k end
+    self.db.keys = db
+    A.sound('select')
+  end
+  self.keysPanel.msg:SetText(msg)
+  self:refreshKeys()
 end
 
 function G:noteFrame()
@@ -256,15 +361,17 @@ function G:refreshSide()
   self.bestT:SetText(best and (K.num(best) .. ' DPS') or '-')
   local playing = s and not s.done
   for i, b in ipairs(self.speedBtns) do b:SetStyle(i == self.speedIndex and 'gold' or 'normal'); b:SetEnabled(not playing) end
+  if self.keysBtn then self.keysBtn:SetEnabled(not playing) end
   self.start:SetShown(not playing)
   self.start:SetLabel(s and s.done and 'Play again' or 'Play')
 end
 
 function G:Show() self.f:Show(); self:refreshSide() end
-function G:Hide() self.f:Hide(); GameTooltip:Hide() end
+function G:Hide() self.f:Hide(); GameTooltip:Hide(); if self.keysPanel then self:closeKeys() end end
 function G:OnPause() end
 
 function G:play()
+  if self.keysPanel:IsShown() then self:closeKeys() end
   self.s = T.newSong(self.speedIndex)
   for _, v in pairs(self.used) do self:hideNote(v); self.notePool[#self.notePool + 1] = v end
   self.used = {}
@@ -325,7 +432,7 @@ function G:OnUpdate(dt)
       if n.lane == 0 then
         v.wide:SetColorTexture(0.2, 0.55, 0.95, n.judged == 'miss' and 0.3 or 0.85)
         v.wide:ClearAllPoints(); v.wide:SetPoint('LEFT', self.board, 'BOTTOMLEFT', 4, HIT_Y + dy); v.wide:SetPoint('RIGHT', self.board, 'BOTTOMRIGHT', -4, HIT_Y + dy); v.wide:Show()
-        v.wideText:ClearAllPoints(); v.wideText:SetPoint('CENTER', v.wide, 'CENTER'); v.wideText:SetText('Life Tap - Space'); v.wideText:Show()
+        v.wideText:ClearAllPoints(); v.wideText:SetPoint('CENTER', v.wide, 'CENTER'); v.wideText:SetText('Life Tap - ' .. T.keyLabel(self.keys[5])); v.wideText:Show()
       else
         local c = COL[n.lane]
         local cx = (n.lane - 0.5) * LW
@@ -344,18 +451,24 @@ function G:OnUpdate(dt)
 end
 
 function G:OnKey(key)
+  if self.binding then self:bindKey(key); return true end
   local s = self.s
   local playing = s and not s.done
   if not playing then
+    if self.keysPanel:IsShown() then
+      if key == 'ESCAPE' or key == 'ENTER' then self:closeKeys(); return true end
+      return false
+    end
     if key == 'ENTER' then self:play(); return true end
     return false
   end
-  for i, k in ipairs(T.KEYS) do if key == k or key == tostring(i) then self:press(i); return true end end
-  if key == 'SPACE' then self:press(0); return true end
+  local a = self:actionOf(key)
+  if a then self:press(a == 5 and 0 or a); return true end
   return false
 end
 function G:OnKeyUp(key)
-  for i, k in ipairs(T.KEYS) do if key == k or key == tostring(i) then self:release(i) end end
+  local a = self:actionOf(key)
+  if a and a < 5 then self:release(a) end
 end
 
 A.RegisterGame({
@@ -363,7 +476,7 @@ A.RegisterGame({
   tagline = 'Your rotation is the song chart. Hit the notes on time, see your DPS.',
   bestLine = function() local b = A.db('taptap').best; local v = b and (b[3] or b[2] or b[1]); return v and ('Best: ' .. K.num(v) .. ' DPS') or 'Play' end,
   help = {
-    '|cffffd040Hit the notes as they reach the rings.|r Keys D F J K (or 1 2 3 4), or click / tap the lane. Space is Life Tap.',
+    '|cffffd040Hit the notes as they reach the rings.|r Keys D F J K (or 1 2 3 4), or click / tap the lane. Space is Life Tap. Change keys (under the side panel) lets you pick your own.',
     ' ',
     'The chart is a real rotation: a ' .. T.FIGHT .. ' s fight of the Forever Warlock Sim\'s standard character - Bane of Agony, Corruption and Immolate kept up, Shadow Bolt in between, Life Tap when mana runs low - with the real cast times and durations, played 2, 3 or 4 times faster.',
     ' ',

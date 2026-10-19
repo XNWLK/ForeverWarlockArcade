@@ -96,6 +96,9 @@ for (let l = 2; l <= 4; l++) { host.run('local g = __ADDON_NS.games.pegs.obj; g:
 host.run('__ADDON_NS.open("taptap")'); host.advance(0.3); check('taptap start');
 host.run('__ADDON_NS.games.taptap.obj:play()'); host.advance(3); check('taptap playing'); host.advance(12); check('taptap later');
 host.advance(60); check('taptap done');
+host.run('local g = __ADDON_NS.games.taptap.obj; g:openKeys(); g:startBinding(2)'); host.advance(0.1); check('taptap keys');
+host.run('local g = __ADDON_NS.games.taptap.obj; g.keys[1] = "NUMPAD1"; g.keys[2] = "BACKSPACE"; g.binding = 5; g:bindKey("NUMPAD1")'); host.advance(0.1); check('taptap keys swapped');
+host.run('local g = __ADDON_NS.games.taptap.obj; g.db.keys = nil; g:loadKeys(); g:closeKeys()');
 host.run('__ADDON_NS.open("merge")'); host.advance(0.3); check('merge start');
 host.run('local g = __ADDON_NS.games.merge.obj; local M = __ADDON_NS.MergeRules; for r = 1, 4 do for c = 1, 4 do g.s.grid[r][c] = { tier = (r - 1) * 4 + c <= 11 and (r - 1) * 4 + c or 1, id = 900 + r * 4 + c } end end; g:draw()');
 host.advance(0.5); check('merge every demon');

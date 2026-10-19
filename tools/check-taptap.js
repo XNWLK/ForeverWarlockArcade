@@ -57,6 +57,59 @@ for (let sp = 1; sp <= 3 && !host.errors.length; sp++) {
   if (!(r[0] < r[1] && r[4] + r[5] > 0)) fail += 'speed ' + sp + ': mistakes did not cost anything ' + r.join(' ') + '\n';
   console.log('speed ' + sp + ': perfect ' + Math.round(dmg / 120) + ' DPS; with mistakes ' + Math.round(r[0] / 120) + ' DPS (' + r[2] + ' perfect, ' + r[3] + ' good, ' + r[4] + ' miss, ' + r[5] + ' interrupted)');
 }
+// changing keys: through the real screen (Change keys, click a row, press a key), saved, swapped when taken, used in play
+host.run(`
+local g = __ADDON_NS.games.taptap.obj
+g.s.done = true
+function KEYSTATE() return table.concat(g.keys, ',') .. '|' .. (g.db.keys and table.concat(g.db.keys, ',') or 'none') .. '|' .. g.lanes[1].key:GetText() .. '|' .. g.tapBtn.label:GetText() end
+function CLICK(b)
+  local top = __web.topAt(b.__id)
+  if top ~= b.__id then error('button covered by another frame: ' .. tostring(b.label and b.label:GetText() or b.__id), 2) end
+  b:Click()
+end
+function KCLICK(w) if w == 'open' then CLICK(g.keysBtn) else CLICK(g.keysPanel.rows[tonumber(w)]) end end
+function KSHOWN() return g.keysPanel:IsShown() and 'yes' or 'no' end
+function KEYPLAY(key)
+  g:play()
+  local s = g.s
+  local n
+  for _, m in ipairs(s.notes) do if m.lane == 1 then n = m; break end end
+  while s.t < n.t - 0.01 do g:OnUpdate(1 / 120) end
+  for _, m in ipairs(s.notes) do if not m.judged and m.t < n.t - 0.2 then m.judged = 'miss' end end
+  local used = g:OnKey(key)
+  local r = (used and 'used' or 'unused') .. ' lane ' .. n.lane .. ' ' .. tostring(n.judged)
+  g:OnKeyUp(key)
+  s.done = true
+  return r
+end
+`, '=tkeys');
+const press = k => { host.key(k, true); host.key(k, false); };
+let ks = '';
+host.layout(); host.call('KCLICK', 'open'); host.layout(); host.call('KCLICK', '1');
+press('Q');
+ks = String(host.call('KEYSTATE'));
+if (!ks.startsWith('Q,F,J,K,SPACE|Q,F,J,K,SPACE|Q|')) fail += 'binding Q to lane 1: ' + ks + '\n';
+host.call('KCLICK', '5');
+press('F');
+ks = String(host.call('KEYSTATE'));
+if (!ks.startsWith('Q,SPACE,J,K,F|') || !ks.endsWith('(F)')) fail += 'binding F (taken by lane 2) to Life Tap should swap: ' + ks + '\n';
+host.call('KCLICK', '3');
+press('ESCAPE');
+ks = String(host.call('KEYSTATE'));
+if (!ks.startsWith('Q,SPACE,J,K,F|')) fail += 'Escape should keep the key: ' + ks + '\n';
+press('ESCAPE');
+if (host.call('KSHOWN') !== 'no') fail += 'Escape should close the keys panel\n';
+let r = String(host.call('KEYPLAY', 'Q'));
+console.log('keys: ' + ks + '; first lane 1 note with Q: ' + r);
+if (!/^used lane 1 (perfect|good)/.test(r)) fail += 'Q should play lane 1: ' + r + '\n';
+r = String(host.call('KEYPLAY', 'D'));
+if (!/^unused/.test(r)) fail += 'D should do nothing once moved: ' + r + '\n';
+// saved: a new game object reads the keys back
+host.run('local A = __ADDON_NS; local g2 = A.games.taptap.create(UIParent); KEYS2 = table.concat(g2.keys, ",")');
+host.run('function K2() return KEYS2 end');
+if (String(host.call('K2')) !== 'Q,SPACE,J,K,F') fail += 'keys not saved: ' + host.call('K2') + '\n';
+host.run('local g = __ADDON_NS.games.taptap.obj; g:openKeys(); g.db.keys = nil; g:loadKeys(); g:closeKeys()');
+if (!String(host.call('KEYSTATE')).startsWith('D,F,J,K,SPACE|none|D|Life Tap  (Space)')) fail += 'defaults: ' + host.call('KEYSTATE') + '\n';
 for (const n of host.nodes.values()) if (n.kind === 'font' && n.vis && n.text && /\bnil\b|NaN/.test(n.parsed.plain)) fail += 'text: ' + n.parsed.plain + '\n';
 if (host.errors.length) { console.log('FAIL: Lua error\n' + host.errors.join('\n')); process.exit(1); }
 if (fail) { console.log('FAIL:\n' + fail); process.exit(1); }
