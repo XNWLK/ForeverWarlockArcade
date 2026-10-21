@@ -20,3 +20,10 @@ Games\Pegs.lua
 Games\TapTap.lua
 Games\Merge.lua
 Games\Circles.lua
+Games\Connections.lua
+Games\Iconle.lua
+Games\Typing.lua
+Games\Gems.lua
+Games\Sweeper.lua
+Games\Flappy.lua
+Games\Rotation.lua

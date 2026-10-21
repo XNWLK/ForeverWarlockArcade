@@ -290,7 +290,7 @@ function G:OnKey(key)
 end
 
 A.RegisterGame({
-  key = 'merge', name = 'Demon 2048', order = 8, ready = true, icon = A.PETS.imp.spell,
+  key = 'merge', name = 'Demon 2048', order = 8, ready = true, icon = A.PETS.felhunter.spell,
   tagline = 'Merge soul shards into ever bigger demons.',
   bestLine = function() local b = A.db('merge').best; return b and b > 0 and ('Best: ' .. K.num(b)) or 'Play' end,
   help = {

@@ -8,11 +8,24 @@ const problems = new Set(), seen = new Set();
 const report = (screen, what) => { if (!seen.has(what)) { seen.add(what); problems.add(screen + ': ' + what); } };
 function inside(r, w) { return r.l >= w.l - 1 && r.b >= w.b - 1 && r.l + r.w <= w.l + w.w + 1 && r.b + r.h <= w.b + w.h + 1; }
 function clipped(a, b) { const l = Math.max(a.l, b.l), bb = Math.max(a.b, b.b); return { l, b: bb, w: Math.max(0, Math.min(a.l + a.w, b.l + b.w) - l), h: Math.max(0, Math.min(a.b + a.h, b.b + b.h) - bb) }; }
+// a region anchored by an edge (TOP..., LEFT...) and by a middle (CENTER, LEFT/RIGHT for height, TOP/BOTTOM for width)
+// on the same axis gets a size from the two that is rarely the one meant (text squashed to nothing)
+const FXP = p => /LEFT$/.test(p) ? 0 : /RIGHT$/.test(p) ? 1 : 0.5;
+const FYP = p => /^TOP/.test(p) ? 1 : /^BOTTOM/.test(p) ? 0 : 0.5;
+function mixed(n) {
+  if (!n.points || n.points.length < 2) return null;
+  const xs = new Set(n.points.map(q => FXP(q.p))), ys = new Set(n.points.map(q => FYP(q.p)));
+  if (xs.has(0.5) && xs.size > 1) return 'x';
+  if (ys.has(0.5) && ys.size > 1) return 'y';
+  return null;
+}
 function check(screen) {
   host.layout();
   const win = [...host.nodes.values()].find(n => n.kind === 'frame' && n.id === host.call('ARCADE_WIN'));
   for (const n of host.nodes.values()) {
     if (!n.vis || !n.rect || n.ealpha < 0.05) continue;
+    const mix = mixed(n);
+    if (mix && ((n.kind === 'font' && n.text) || n.kind === 'tex')) report(screen, 'anchored by an edge and a middle on ' + mix + ': ' + (n.kind === 'font' ? '"' + n.parsed.plain.slice(0, 40) + '"' : n.kind + ' ' + n.id + ' ' + n.points.map(q => q.p).join('+')));
     if ((n.kind === 'font' && n.text) || n.kind === 'tex' || n.mouse) {
       // textures: what a clipping frame (SetClipsChildren) leaves of them; text and buttons must fit whole
       const shown = n.clipr && n.kind === 'tex' ? clipped(n.rect, n.clipr) : n.rect;
@@ -112,6 +125,24 @@ host.run('__ADDON_NS.games.circles.obj:play()'); host.advance(3); check('circles
 host.advance(60); check('circles done');
 host.run('local g = __ADDON_NS.games.circles.obj; g.keys[1] = "NUMPAD1"; g.keys[2] = "BACKSPACE"; g:openKeys(); g:startBinding(2)'); host.advance(0.1); check('circles keys');
 host.run('local g = __ADDON_NS.games.circles.obj; g.db.keys = nil; g:loadKeys(); g:closeKeys()');
+host.run('__ADDON_NS.open("connections")'); host.advance(0.4); check('connections daily');
+host.run('local g = __ADDON_NS.games.connections.obj; for _, n in ipairs(g.s.groups[1].items) do g:toggle(n) end; g:submit()'); host.advance(0.4); check('connections a group');
+host.run('local g = __ADDON_NS.games.connections.obj; g:openPractice(); local s = g.s; for i = 1, 4 do s.tries = {}; g.picked = { s.groups[1].items[1], s.groups[2].items[i], s.groups[3].items[1], s.groups[4].items[i] }; g:submit() end'); host.advance(0.4); check('connections lost');
+host.run('__ADDON_NS.open("iconle")'); host.advance(0.4); check('iconle daily');
+host.run('local g = __ADDON_NS.games.iconle.obj; g:openPractice(); for _, n in ipairs({ "Aftermath", "Bane", "Cataclysm", "Decimation" }) do if not g.s.done and not __ADDON_NS.IconleRules.isRight(g.s, n) then g:guess(n) end end; g:OnKey("S"); g:OnKey("H")'); host.advance(0.5); check('iconle hint and search');
+host.run('local g = __ADDON_NS.games.iconle.obj; g:guess(__ADDON_NS.IconleRules.answerOf(g.s).names[1])'); host.advance(0.5); check('iconle solved');
+host.run('__ADDON_NS.open("typing")'); host.advance(0.3); check('typing start');
+host.run('__ADDON_NS.games.typing.obj:play()'); host.advance(8, 1 / 30); check('typing falling');
+host.advance(40, 1 / 30); check('typing over');
+host.run('__ADDON_NS.open("gems")'); host.advance(0.5); check('gems start');
+host.run('local g = __ADDON_NS.games.gems.obj; local a, b = __ADDON_NS.GemsRules.findMove(g.s); g:try(a, b)'); host.advance(2, 1 / 30); check('gems after a move');
+for (let z = 1; z <= 3; z++) { host.run('__ADDON_NS.open("sweeper"); local g = __ADDON_NS.games.sweeper.obj; g.size = ' + z + '; g:newGame(); g:click(3, 3, "LeftButton")'); host.advance(0.3); check('sweeper size ' + z); }
+host.run('local g = __ADDON_NS.games.sweeper.obj; local s = g.s; for r = 1, s.h do for c = 1, s.w do if s.cells[r][c].mine and not s.done then g:click(r, c, "LeftButton") end end end'); host.advance(0.3); check('sweeper lost');
+host.run('__ADDON_NS.open("flappy")'); host.advance(0.3); check('flappy start');
+host.run('__ADDON_NS.games.flappy.obj:flap()'); host.advance(1.5, 1 / 60); check('flappy flying');
+host.advance(4, 1 / 60); check('flappy crashed');
+for (let lv = 1; lv <= 6; lv++) { host.run('__ADDON_NS.open("rotation"); __ADDON_NS.games.rotation.obj:open(' + lv + ')'); host.advance(0.2); check('rotation ' + lv); }
+host.run('local g = __ADDON_NS.games.rotation.obj; for k in __ADDON_NS.RotationRules.PUZZLES[6].best:gmatch("%a+") do g:add(k) end; g.reveal = true; g:refresh(true)'); host.advance(1); check('rotation done, best shown');
 host.run('__ADDON_NS.games.merge.obj:newGame(); __ADDON_NS.open(nil)'); host.advance(0.3); check('picker, all games');
 if (host.errors.length) { console.log('FAIL: Lua error\n' + host.errors.join('\n')); process.exit(1); }
 if (problems.size) { console.log('CHECK (' + problems.size + '):\n  ' + [...problems].join('\n  ')); process.exit(1); }
