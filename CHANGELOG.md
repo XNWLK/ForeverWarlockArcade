@@ -9,5 +9,10 @@
   Real cast times, global cooldown, spell queue, mana, damage per tick and Life Tap from the sim. Your best DPS is kept.
 - **Higher or Lower**, **Warlockle**, **Warlock Ware**, **Shadow Pegs**, **Tap Tap DPS** and **Demon 2048**: all eight games are playable.
 - Fixed: after winning a blind in Shard & Mult, the Collect button could not be clicked. Enter collects too.
-- **Soul Circles**: the Tap Tap DPS rotation with aim - click the spells as their rings close in, hold casts and follow the ball. Two keys (Z / X, changeable) work too. The picker now shows five games a row.
+- **Soul Circles**: the Tap Tap DPS rotation with aim - click the spells as their rings close in, hold casts and follow the ball. Two keys (Z / X, changeable) work too.
 - Tap Tap DPS: pick your own keys with **Change keys** (lanes and Life Tap). They are saved.
+- Seven more games: **Warlock Connections** and **Iconle** (new puzzles every day), **Type to Cast**, **Spell Gems**,
+  **Felsweeper**, **Flappy Imp** and **Perfect Rotation**. Sixteen games in all.
+- A new look: rounded, softly lit panels and buttons, shadows, glows when you point at things, panels that fade in,
+  embers drifting through the window, and a game picker with filters (Daily, Rhythm, Action, Puzzle, Cards & Quiz).
+  New sounds on the web page. Fixed: on the web page, long texts with extra line spacing were cut off at the bottom.

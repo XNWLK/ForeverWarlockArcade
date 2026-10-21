@@ -310,7 +310,7 @@ function G:handle()
     elseif e.kind == 'oom' then self.pop:show('Not enough mana!', x, y, C.bad, 15, 0.9); A.sound('error'); changed = true
     elseif e.kind == 'ground' then self.pop:show('Lost a life', e.x, Y.GROUND + 24, C.bad, 15, 0.9); A.sound('miss'); changed = true
     elseif e.kind == 'wrong' then A.sound('tick'); changed = true
-    elseif e.kind == 'letter' then A.sound('hover') end
+    elseif e.kind == 'letter' then A.sound('hover'); changed = true end
   end
   s.events = {}
   if changed then self:refreshSide() end

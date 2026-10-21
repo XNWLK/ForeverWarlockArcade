@@ -21,6 +21,13 @@ The games use real numbers from the [Forever Warlock Sim](https://xnwlk.github.i
 | **Tap Tap DPS** | The rotation is the song chart: a 120 s fight of the sim's standard character as falling notes. Casts are hold notes - let go early and the cast is interrupted. Your score is the DPS. | Playable |
 | **Demon 2048** | Merge soul shards into Imps, Voidwalkers, Succubi ... all the way to the Demon Lord. | Playable |
 | **Soul Circles** | The same real rotation as Tap Tap DPS, now with aim: click each spell as its ring closes in, hold casts and follow the ball to the end. Your score is the DPS, with a rank from D to SS. | Playable |
+| **Warlock Connections** | Sixteen Warlock things - spells, talents, demons, consumables - hide four groups of four ("Fire spells", "Talents with 5 ranks", "Soul in the name" ...). Four mistakes allowed. A new puzzle every day, and practice puzzles. | Playable |
+| **Iconle** | A spell, talent or demon icon, zoomed far in. Guess whose it is in six tries; every miss zooms out. A new icon every day, and practice icons. | Playable |
+| **Type to Cast** | Spell names fall towards the fire; type them to cast them for their real damage and mana. Life Tap for mana, DoTs early (only the ticks before the end count). | Playable |
+| **Spell Gems** | Swap gems to line up three spells and cast them; chain reactions hit harder. Line gems, Rain of Fire and Hellfire specials. Beat the Molten Core bosses before your moves run out. | Playable |
+| **Felsweeper** | Infernals are buried in the field: open every safe square, the numbers tell how many Infernals touch it. Three sizes, best times kept. | Playable |
+| **Flappy Imp** | Flap the Imp through the gaps between the lava pillars of Molten Core and collect soul shards. | Playable |
+| **Perfect Rotation** | Six short fights: put the casts in the order that deals the most damage - real cast times, mana and DoT ticks, clipping included. Stars against the best order a search found. | Playable |
 
 ## In the game
 
