@@ -33,7 +33,7 @@ The games use real numbers from the [Forever Warlock Sim](https://xnwlk.github.i
 
 **Get the addon on CurseForge:** https://www.curseforge.com/wow/addons/warlock-arcade
 
-Or download `WarlockArcade-<version>.zip` from the [releases](https://github.com/XNWLK/ForeverWarlockArcade/releases) and unzip it into `World of Warcraft\_classic_beta_\Interface\AddOns` (it holds one folder, `WarlockArcade`). Restart the game and type `/arcade`.
+Or download `WarlockArcade-<version>.zip` from the [releases](https://github.com/XNWLK/ForeverWarlockArcade/releases) and unzip it into `World of Warcraft\_forever_\Interface\AddOns` (it holds one folder, `WarlockArcade`). Restart the game and type `/arcade`.
 
 ## The other Warlock projects
 
