@@ -1,4 +1,4 @@
--- Warlockle: guess the talent of the day. Pick talents from the three real talent trees; every guess shows how close
+-- Warlockle: guess the talent of the day. Pick talents from an A to Z list of the real talents; every guess shows how close
 -- it is (tree, tier, column, ranks, whether it needs another talent first). After a few misses the talent's own text
 -- is shown with its name hidden. One puzzle a day (the same for everyone, by the server's date), and a practice mode.
 local ADDON, A = ...
@@ -265,7 +265,7 @@ A.RegisterGame({
     return 'New talent today'
   end,
   help = {
-    '|cffffd040Guess the talent of the day in ' .. W.MAX .. ' tries.|r Click a talent in the trees to guess it.',
+    '|cffffd040Guess the talent of the day in ' .. W.MAX .. ' tries.|r Click a talent in the list (A to Z) to guess it.',
     ' ',
     'Each guess shows how close it is: the same tree (green), its tier and column in the tree and its number of ranks (green = right, yellow = one off, with which way to go), and whether it needs another talent first.',
     ' ',
