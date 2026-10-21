@@ -160,7 +160,8 @@ local function build()
   W:SetScript('OnKeyDown', function(self, key)
     local used = false
     if W.helpPanel:IsShown() and (key == 'ESCAPE' or key == 'ENTER' or key == 'SPACE') then W.helpPanel:Hide(); used = true
-    elseif A.current and A.current.obj.OnKey then used = A.current.obj:OnKey(key) and true or false end
+    elseif A.current and A.current.obj.OnKey then used = A.current.obj:OnKey(key) and true or false
+    elseif not A.current and (key == 'LEFT' or key == 'RIGHT') then A.turnPage(key == 'LEFT' and -1 or 1); used = true end
     if not InCombatLockdown() then self:SetPropagateKeyboardInput(not used) end
   end)
   -- letting go of a key (hold notes in Tap Tap DPS)
@@ -257,7 +258,7 @@ function A.buildPicker()
   local x = -24
   for i = #A.KINDS, 1, -1 do
     local k = A.KINDS[i]
-    local c = K.button(P, 18 + #k[2] * 7, 26, k[2], function() A.db().filter = k[1]; A.refreshPicker(true) end, 'ghost', 11)
+    local c = K.button(P, 18 + #k[2] * 7, 26, k[2], function() A.db().filter = k[1]; A.pickerPage = 1; A.refreshPicker(true) end, 'ghost', 11)
     c:SetPoint('TOPRIGHT', x, -26)
     c.kind = k[1]
     x = x - (18 + #k[2] * 7) - 6
@@ -265,7 +266,7 @@ function A.buildPicker()
   end
   P.tiles = {}
   for i, def in ipairs(A.order) do
-    local t = K.box(P, 222, 120, K.C.panel, K.C.line, 1, 'Button')
+    local t = K.box(P, 222, 114, K.C.panel, K.C.line, 1, 'Button')
     t.def = def
     t.hover = K.shape(t, 'BACKGROUND', 'shadow', -7)
     t.hover:SetPoint('TOPLEFT', -20, 20); t.hover:SetPoint('BOTTOMRIGHT', 20, -20)
@@ -309,6 +310,15 @@ function A.buildPicker()
     t:SetScript('OnClick', function(self) if self.def.ready then A.sound('open'); A.open(self.def.key) end end)
     P.tiles[i] = t
   end
+  -- pages of sixteen: the arrows, the mouse wheel or Left / Right
+  P.prev = K.button(P, 30, 26, '<', function() A.turnPage(-1) end, 'ghost', 13)
+  P.next = K.button(P, 30, 26, '>', function() A.turnPage(1) end, 'ghost', 13)
+  P.pageT = K.text(P, 12, K.C.dim, 'CENTER')
+  P.pageT:SetPoint('BOTTOM', 0, 15)
+  P.prev:SetPoint('RIGHT', P.pageT, 'LEFT', -12, 0)
+  P.next:SetPoint('LEFT', P.pageT, 'RIGHT', 12, 0)
+  P:EnableMouseWheel(true)
+  P:SetScript('OnMouseWheel', function(_, d) A.turnPage(d > 0 and -1 or 1) end)
   local foot = K.text(P, 11, K.C.faint, 'CENTER')
   P.foot = foot
   foot:SetPoint('BOTTOM', 0, 12)
@@ -325,16 +335,24 @@ function A.refreshPicker(animate)
     if not any then filter = 'all' end
   end
   for _, c in ipairs(P.chips) do c:SetStyle(c.kind == filter and 'gold' or 'ghost') end
-  local cols, tw, th, gap = 4, 222, 120, 8
+  local cols, tw, th, gap, per = 4, 222, 114, 8, 16
   local x0 = (A.W - (cols * tw + (cols - 1) * gap)) / 2
-  local n = 0
+  local total = 0
+  for _, t in ipairs(P.tiles) do if filter == 'all' or t.def.kind == filter then total = total + 1 end end
+  local pages = math.max(1, math.ceil(total / per))
+  A.pickerPage = math.max(1, math.min(pages, A.pickerPage or 1))
+  P.pages = pages
+  local first = (A.pickerPage - 1) * per
+  local n, k = 0, 0
   for _, t in ipairs(P.tiles) do
     local def = t.def
-    local show = filter == 'all' or def.kind == filter
+    local fits = filter == 'all' or def.kind == filter
+    local show = fits and k >= first and k < first + per
+    if fits then k = k + 1 end
     t:SetShown(show)
     if show then
       local col, row = n % cols, floor(n / cols)
-      local tx, ty = x0 + col * (tw + gap), -78 - row * (th + gap)
+      local tx, ty = x0 + col * (tw + gap), -76 - row * (th + gap)
       t:ClearAllPoints(); t:SetPoint('TOPLEFT', tx, ty)
       if animate ~= false then
         local d = n * 0.025
@@ -353,7 +371,18 @@ function A.refreshPicker(animate)
     t.best:SetText(line)
     t.best:SetTextColor(def.ready and K.C.text[1] or K.C.faint[1], def.ready and K.C.text[2] or K.C.faint[2], def.ready and K.C.text[3] or K.C.faint[3])
   end
-  P.foot:SetShown(n <= 12)   -- four full rows reach the bottom
+  P.foot:SetShown(pages == 1 and n <= 12)   -- four full rows reach the bottom
+  P.pageT:SetText('Page ' .. A.pickerPage .. ' of ' .. pages)
+  P.pageT:SetShown(pages > 1); P.prev:SetShown(pages > 1); P.next:SetShown(pages > 1)
+  P.prev:SetEnabled(A.pickerPage > 1); P.next:SetEnabled(A.pickerPage < pages)
+end
+function A.turnPage(d)
+  local P = W.picker
+  local p = math.max(1, math.min(P.pages or 1, (A.pickerPage or 1) + d))
+  if p == A.pickerPage then return end
+  A.pickerPage = p
+  A.sound('flip')
+  A.refreshPicker(true)
 end
 
 function A.toggle()

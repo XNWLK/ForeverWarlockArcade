@@ -27,3 +27,5 @@ Games\Gems.lua
 Games\Sweeper.lua
 Games\Flappy.lua
 Games\Rotation.lua
+Games\GuessDps.lua
+Games\Crack.lua
