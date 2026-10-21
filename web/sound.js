@@ -84,6 +84,13 @@
     tick: () => tone('square', 2200, 0, 0.018, 0.02),
     countdown: () => bell(N(21), 0, 0.3, 0.06, 1),
     go: () => { bell(N(33), 0, 0.5, 0.07, 1.2); tone('triangle', N(21), 0, 0.3, 0.04); },
+    // the four demon runes of Ritual of Summoning: a chord of four bells
+    rune1: () => { bell(N(12), 0, 0.5, 0.07, 1.2); tone('sine', N(12), 0, 0.4, 0.03, 0.01); },
+    rune2: () => { bell(N(16), 0, 0.5, 0.07, 1.2); tone('sine', N(16), 0, 0.4, 0.03, 0.01); },
+    rune3: () => { bell(N(19), 0, 0.5, 0.07, 1.2); tone('sine', N(19), 0, 0.4, 0.03, 0.01); },
+    rune4: () => { bell(N(24), 0, 0.5, 0.07, 1.2); tone('sine', N(24), 0, 0.4, 0.03, 0.01); },
+    jump: () => tone('triangle', [N(7), N(19)], 0, 0.12, 0.06),
+    lock: () => { noise('bandpass', [3000, 800], 0, 0.12, 0.08, 2); tone('square', [N(24), N(12)], 0, 0.1, 0.03); },
     perfect: () => { bell(N(31), 0, 0.22, 0.05, 1.2); tone('sine', N(43), 0.01, 0.12, 0.02); },
     good: () => bell(N(26), 0, 0.18, 0.04, 0.8),
     miss: () => { tone('triangle', [180, 90], 0, 0.14, 0.07); noise('lowpass', 500, 0, 0.1, 0.04); },

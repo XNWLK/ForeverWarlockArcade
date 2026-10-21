@@ -29,3 +29,5 @@ Games\Flappy.lua
 Games\Rotation.lua
 Games\GuessDps.lua
 Games\Crack.lua
+Games\SpellLock.lua
+Games\Ritual.lua

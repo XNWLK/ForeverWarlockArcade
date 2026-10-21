@@ -21,7 +21,8 @@ end
 -- Sounds by name. In the game: sound kits of the game's own library (names without one stay quiet there, like the
 -- per-note sounds, so the game's own sounds are not drowned). On the web page: made-up sounds of web/sound.js, by name.
 local SOUNDS = { click = 856, select = 857, open = 839, close = 840, coin = 891, win = 888, lose = 847, card = 1202, crit = 3081,
-  flip = 1202, place = 1202, pop = 857, whoosh = 839, levelup = 888, countdown = 856, go = 857 }
+  flip = 1202, place = 1202, pop = 857, whoosh = 839, levelup = 888, countdown = 856, go = 857,
+  rune1 = 856, rune2 = 857, rune3 = 1202, rune4 = 891, jump = 857, lock = 3081 }
 function A.sound(name)
   if not A.db().sound or not PlaySound then return end
   if A.WEB then pcall(PlaySound, name); return end
