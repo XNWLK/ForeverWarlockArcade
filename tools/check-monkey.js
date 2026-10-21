@@ -1,14 +1,16 @@
 // A monkey test: opens each game and does thousands of random things to it - clicks on whatever the mouse can reach
 // (hit-tested like the page does), presses and lets go, hovers (tooltips), keys, waits of random length, going back
 // to the picker and in again. Any Lua error fails it, with the steps that led there.
-//   node tools/check-monkey.js [steps per game=1500] [seed=1]
+//   node tools/check-monkey.js [steps per game=1500] [seed=1] [game]   (game: run it the way the game does, not the web page)
 const { boot } = require('./host.js');
 const STEPS = +process.argv[2] || 1500;
 let seed = +process.argv[3] || 1;
 const rnd = () => { seed = (seed * 16807) % 2147483647; return seed / 2147483647; };
 const pick = a => a[Math.floor(rnd() * a.length)];
 const KEYS = ['1', '2', '3', '4', '5', '6', '7', '8', '9', 'SPACE', 'ENTER', 'ESCAPE', 'LEFT', 'RIGHT', 'UP', 'DOWN', 'D', 'F', 'J', 'K', 'W', 'A', 'S', 'H', 'L', 'R'];
-const host = boot({ quiet: true });
+const GAME = process.argv[4] === 'game';
+const host = boot({ quiet: true, web: !GAME });
+if (GAME) host.run('WarlockArcadeFrame:Show()');
 host.run('math.randomseed(' + seed + ')');
 const games = String(host.run('GAMES = {}; for _, d in ipairs(__ADDON_NS.order) do GAMES[#GAMES + 1] = d.key end; GAMES_S = table.concat(GAMES, " ")') && '') || '';
 host.run('function GAMELIST() return GAMES_S end');

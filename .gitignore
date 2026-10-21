@@ -5,3 +5,4 @@ docs/
 CLAUDE.md
 TODO.md
 *.zip
+dist/

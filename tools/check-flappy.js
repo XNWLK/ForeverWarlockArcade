@@ -39,6 +39,7 @@ if (idle[3] !== 'true' || +idle[0] !== 0 || +idle[2] > 3) fail += 'a player who 
 const a = String(host.call('FPLAY', true, 25, 777)), b = String(host.call('FPLAY', true, 25, 777));
 if (a.split(' ').slice(0, 3).join(' ') !== b.split(' ').slice(0, 3).join(' ')) fail += 'the same flight came out different: ' + a + ' / ' + b + '\n';
 // a flight that ends (the bot stops flapping after 12): the best is kept
+host.run('__ADDON_NS.db("flappy").best = nil');
 const end = String(host.call('FPLAY', true, 999, 5, 12)).split(' ').map(Number);
 console.log('a flight that ends at ' + end[0] + ': best ' + end[4]);
 if (end[4] !== end[0] || end[0] < 12) fail += 'best not kept: ' + end.join(' ') + '\n';
