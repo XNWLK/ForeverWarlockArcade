@@ -41,7 +41,7 @@ Copy the `WarlockArcade` folder into `World of Warcraft\_classic_beta_\Interface
 | Forever Warlocking: 3D rotation practice | https://xnwlk.github.io/ForeverWarlocking/ | https://github.com/XNWLK/ForeverWarlocking |
 | Xn's Warlock Sim: the sim as an addon | https://www.curseforge.com/wow/addons/xns-warlock-sim | https://github.com/XNWLK/WarlockSIMAddon |
 
-## A friend's project
+## Shuklock's project
 
 **Shardlock Idle**, a Warlock idle game: cast Shadow Bolts, collect soul shards, level up and learn Drain Soul. Play it in the browser at https://shuklock.github.io/drain-soul/ - it is also a WoW: Forever addon.
 
