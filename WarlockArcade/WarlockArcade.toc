@@ -31,3 +31,5 @@ Games\GuessDps.lua
 Games\Crack.lua
 Games\SpellLock.lua
 Games\Ritual.lua
+Games\Pairs.lua
+Games\Snake.lua
