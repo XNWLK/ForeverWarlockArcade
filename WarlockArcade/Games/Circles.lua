@@ -530,7 +530,7 @@ function G:OnKeyUp(key) self:release(key) end
 
 A.RegisterGame({
   key = 'circles', name = 'Soul Circles', order = 9, ready = true, icon = A.SPELLS.hellfire.id,
-  tagline = 'Click the spells as the rings close in, follow your casts. Your aim is your DPS.',
+  tagline = 'Click the spells as the rings close in. Your aim is your DPS.',
   bestLine = function() local b = A.db('circles').best; local v = b and (b[3] or b[2] or b[1]); return v and ('Best: ' .. K.num(v) .. ' DPS') or 'Play' end,
   help = {
     '|cffffd040Click each circle as its ring closes in on it.|r Or point at it and press Z or X (Change keys picks others). The numbers show the order.',

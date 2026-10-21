@@ -14,7 +14,8 @@ function check(screen) {
   for (const n of host.nodes.values()) {
     if (!n.vis || !n.rect || n.ealpha < 0.05) continue;
     if ((n.kind === 'font' && n.text) || n.kind === 'tex' || n.mouse) {
-      const shown = n.clipr ? clipped(n.rect, n.clipr) : n.rect;   // what a clipping frame (SetClipsChildren) leaves of it
+      // textures: what a clipping frame (SetClipsChildren) leaves of them; text and buttons must fit whole
+      const shown = n.clipr && n.kind === 'tex' ? clipped(n.rect, n.clipr) : n.rect;
       if (win && n.id !== win.id && shown.w > 0 && shown.h > 0 && !inside(shown, win.rect) && n.rect.w > 0) report(screen, 'outside the window: ' + (n.kind === 'font' ? '"' + n.parsed.plain.slice(0, 40) + '"' : n.kind + ' ' + n.id));
     }
     // a button the mouse cannot reach: something else takes the click at its middle

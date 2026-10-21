@@ -10,10 +10,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Philosopher:wght@400;700&family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
 <style>
-  :root { --bg: #07050b; --bar: #110c18; --line: #2c2238; --text: #b9adc9; --link: #e8c766; }
+  :root { --bg: #050309; --bar: rgba(16, 11, 24, 0.85); --line: rgba(140, 100, 210, 0.22); --text: #b9adc9; --link: #f0cd6e; }
   html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text); overflow: hidden;
     font: 13px/1.3 'Roboto Condensed', 'Arial Narrow', sans-serif; }
-  body { display: flex; flex-direction: column; background: radial-gradient(ellipse at 50% 30%, #1a1024 0%, #07050b 70%); }
+  body { display: flex; flex-direction: column;
+    background: radial-gradient(ellipse at 25% 10%, #22123a 0%, transparent 55%), radial-gradient(ellipse at 85% 95%, #0d2412 0%, transparent 50%), var(--bg); }
   #stage { position: relative; flex: 1; overflow: hidden; touch-action: none; user-select: none; -webkit-user-select: none; }
   .wow-ui { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
   .wow-ui > div { position: absolute; box-sizing: border-box; pointer-events: none; }
@@ -21,7 +22,8 @@
   .wow-font { display: flex; overflow: visible; }
   .wow-font > span { display: block; width: 100%; }
   .wow-tip { position: absolute; display: none; max-width: 300px; padding: 7px 9px; box-sizing: border-box; pointer-events: none;
-    background: rgba(9, 8, 22, 0.94); border: 1px solid #6b6b84; border-radius: 4px; box-shadow: 0 2px 8px #000a;
+    background: rgba(14, 10, 24, 0.9); border: 1px solid rgba(170, 130, 255, 0.35); border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(0, 0, 0, 0.4); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
     font: 12px/1.35 'Philosopher', serif; color: #ffd200; }
   .wow-tip-row { display: flex; gap: 14px; justify-content: space-between; }
   .wow-tip-row.head { font-size: 14px; margin-bottom: 2px; }
@@ -29,11 +31,17 @@
   .wow-error { position: fixed; left: 0; right: 0; bottom: 30px; display: none; padding: 6px 12px; background: #4a0d0d; color: #ffd5d5;
     font: 12px monospace; z-index: 99999; white-space: pre-wrap; }
   footer { flex: none; height: 28px; display: flex; align-items: center; justify-content: center; gap: 16px; padding: 0 16px;
-    background: var(--bar); border-top: 1px solid var(--line); white-space: nowrap; overflow-x: auto; }
+    background: var(--bar); border-top: 1px solid var(--line); white-space: nowrap; overflow-x: auto; letter-spacing: 0.02em; }
   footer a { color: var(--link); text-decoration: none; }
-  footer a:hover { text-decoration: underline; }
+  footer a { transition: color 0.15s, text-shadow 0.15s; }
+  footer a:hover { color: #ffe39a; text-shadow: 0 0 12px rgba(255, 210, 110, 0.5); }
   footer .sep { color: #4a3d5a; }
-  #loading { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font: 22px 'Cinzel', serif; color: #8a7aa0; }
+  #loading { position: absolute; inset: 0; display: flex; flex-direction: column; gap: 18px; align-items: center; justify-content: center;
+    font: 20px 'Cinzel', serif; color: #a593c2; letter-spacing: 0.06em; animation: pulse 1.8s ease-in-out infinite; }
+  #loading::before { content: ''; width: 46px; height: 46px; border-radius: 50%; border: 3px solid rgba(160, 120, 255, 0.18);
+    border-top-color: #9d7bff; border-right-color: #6ee36a; animation: spin 0.9s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @keyframes pulse { 50% { opacity: 0.6; } }
   body.ready #loading { display: none; }
 </style>
 </head>

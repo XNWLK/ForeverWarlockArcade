@@ -9,6 +9,26 @@ const SHAPES = {
   circle: (x, y) => { const d = Math.hypot(x - S / 2, y - S / 2); return clamp(S / 2 - 1 - d + 0.5); },
   ring: (x, y) => { const d = Math.hypot(x - S / 2, y - S / 2); return Math.min(clamp(S / 2 - 1 - d + 0.5), clamp(d - (S / 2 - 7) + 0.5)); },
   glow: (x, y) => { const d = Math.hypot(x - S / 2, y - S / 2) / (S / 2); return Math.max(0, 1 - d) ** 2; },
+  // a four-pointed sparkle for hits and wins
+  spark: (x, y) => { const dx = Math.abs(x - S / 2) / (S / 2), dy = Math.abs(y - S / 2) / (S / 2); const star = Math.max(0, 1 - (Math.sqrt(dx) + Math.sqrt(dy)) / 1.05); return Math.min(1, star * 2.2 + Math.max(0, 1 - Math.hypot(dx, dy) * 3) ** 2); },
+};
+// Rounded panels for texture slicing (SetTextureSliceMargins with the corner radius): rr<R> is a filled rounded
+// rectangle, rl<R>_<W> its outline W wide, shadow a soft blur around a rounded rectangle (margins 24; drawn 20 past
+// the panel). The web page draws these names as CSS rounded boxes, the same sizes.
+function rrAlpha(x, y, r) { const lo = r, hi = S - r; const qx = Math.max(lo - x, 0, x - hi), qy = Math.max(lo - y, 0, y - hi); const d = Math.hypot(qx, qy) - r; return clamp(0.5 - d); }
+function rlAlpha(x, y, r, w) {
+  const outer = rrAlpha(x, y, r);
+  const ri = Math.max(0, r - w), lo = w + ri, hi = S - w - ri;
+  const qx = Math.max(lo - x, 0, x - hi), qy = Math.max(lo - y, 0, y - hi);
+  const inner = clamp(0.5 - (Math.hypot(qx, qy) - ri));
+  return Math.max(0, outer - inner);
+}
+[4, 6, 10, 14].forEach(r => { SHAPES['rr' + r] = (x, y) => rrAlpha(x, y, r); [1, 2].forEach(w => { SHAPES['rl' + r + '_' + w] = (x, y) => rlAlpha(x, y, r, w); }); });
+SHAPES.shadow = (x, y) => {
+  const r = 8, lo = 20 + r, hi = S - 20 - r;
+  const qx = Math.max(lo - x, 0, x - hi), qy = Math.max(lo - y, 0, y - hi);
+  const d = Math.max(0, Math.hypot(qx, qy) - r);
+  return 0.85 * Math.exp(-((d / 9) ** 2));
 };
 function clamp(v) { return Math.max(0, Math.min(1, v)); }
 function pixels(fn) {

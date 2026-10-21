@@ -145,6 +145,7 @@
         vcolor(id, r, g, b, a) { set(id, 'vcolor', [r, g, b, a]); },
         coords(id, l, r, t, b) { set(id, 'coords', [l, r, t, b]); },
         rot(id, r) { set(id, 'rot', r); },
+        slice(id, l, t, r, b) { set(id, 'slice', [l, t, r, b]); },
         desat(id, v) { set(id, 'desat', v); },
         blend(id, m) { set(id, 'blend', m); },
         gradient(id, o, r1, g1, b1, a1, r2, g2, b2, a2) { set(id, 'gradient', [o, [r1, g1, b1, a1], [r2, g2, b2, a2]]); },
@@ -197,10 +198,12 @@
     effScale(n) { let s = 1; while (n) { s *= n.scale || 1; n = n.parent ? this.nodes.get(n.parent) : null; } return s; }
     frameOf(n) { return n.kind === 'tex' || n.kind === 'font' ? this.nodes.get(n.parent) : n; }
     measureNode(n, wrapWidth) {
-      const k = n.text + '\x00' + (n.font && n.font.path) + (n.font && n.font.size) + '\x00' + wrapWidth + (n.wrap ? 'w' : '');
+      const k = n.text + '\x00' + (n.font && n.font.path) + (n.font && n.font.size) + '\x00' + wrapWidth + (n.wrap ? 'w' : '') + (n.spacing || 0);
       if (n.mkey === k) return n.mval;
       const m = this.o.measure ? this.o.measure(n.parsed ? n.parsed.plain : '', n.font, n.wrap ? wrapWidth : 0)
         : { w: (n.parsed ? n.parsed.plain.length : 0) * n.font.size * 0.5, h: n.font.size * 1.15, lines: 1 };
+      // SetSpacing adds to every line (the page draws line-height = size * 1.15 + spacing)
+      if (n.spacing) m.h += (m.lines || 1) * n.spacing;
       n.mkey = k; n.mval = m; return m;
     }
     layout() {

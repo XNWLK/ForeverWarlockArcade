@@ -457,7 +457,7 @@ end
 
 A.RegisterGame({
   key = 'juggler', name = 'DoT Juggler', order = 2, ready = true, icon = A.SPELLS.corruption.id,
-  tagline = 'Keep your DoTs ticking on every dummy - refresh each one before it falls off.',
+  tagline = 'Keep your DoTs ticking on every training dummy.',
   bestLine = function() local b = A.db('juggler').best; return b and ('Best: ' .. K.num(b) .. ' DPS') or 'Play' end,
   help = {
     '|cffffd040Keep as many DoTs ticking as you can for ' .. J.LENGTH .. ' seconds.|r Training dummies keep arriving, up to six. When one is destroyed, a new one takes its place.',

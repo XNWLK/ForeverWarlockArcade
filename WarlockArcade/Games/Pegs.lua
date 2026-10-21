@@ -394,7 +394,7 @@ end
 
 A.RegisterGame({
   key = 'pegs', name = 'Shadow Pegs', order = 6, ready = true, icon = A.SPELLS.shadowBolt.id,
-  tagline = 'Bounce a Shadow Bolt through the pegs and light up every soul shard.',
+  tagline = 'Bounce a Shadow Bolt through the soul shard pegs.',
   bestLine = function() local b = A.db('pegs').best; return b and ('Best: ' .. K.num(b) .. ' damage') or 'Play' end,
   help = {
     '|cffffd040Clear every orange soul shard peg with ' .. P.BALLS .. ' Shadow Bolts.|r Aim with the mouse, click to shoot (or Left / Right and Space).',

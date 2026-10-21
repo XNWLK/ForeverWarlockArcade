@@ -473,7 +473,7 @@ end
 
 A.RegisterGame({
   key = 'taptap', name = 'Tap Tap DPS', order = 7, ready = true, icon = A.SPELLS.rainOfFire.id,
-  tagline = 'Your rotation is the song chart. Hit the notes on time, see your DPS.',
+  tagline = 'Your rotation is the song chart. Hit every note.',
   bestLine = function() local b = A.db('taptap').best; local v = b and (b[3] or b[2] or b[1]); return v and ('Best: ' .. K.num(v) .. ' DPS') or 'Play' end,
   help = {
     '|cffffd040Hit the notes as they reach the rings.|r Keys D F J K (or 1 2 3 4), or click / tap the lane. Space is Life Tap. Change keys (under the side panel) lets you pick your own.',

@@ -257,12 +257,12 @@ function G:OnUpdate() end
 
 A.RegisterGame({
   key = 'warlockle', name = 'Warlockle', order = 4, ready = true, icon = A.SPELLS.curseOfElements.id,
-  tagline = 'The talent of the day: guess it in six tries from its tree, tier, column and ranks.',
+  tagline = 'Guess the talent of the day in six tries.',
   bestLine = function()
     local db = A.db('warlockle')
     local d = db.daily
     if d and d.day == W.today() and d.done then return d.won and ('Today: solved in ' .. #d.guesses) or 'Today: missed' end
-    return 'Today\'s talent is waiting'
+    return 'New talent today'
   end,
   help = {
     '|cffffd040Guess the talent of the day in ' .. W.MAX .. ' tries.|r Click a talent in the trees to guess it.',

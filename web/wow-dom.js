@@ -41,7 +41,12 @@
     if (/^(spell|item):/.test(path)) return { url: icons[path] || icons.unknown, mask: false };
     const p = path.replace(/\//g, '\\');
     const m = /^Interface\\AddOns\\([^\\]+)\\Media\\(.+?)(\.(tga|blp|png))?$/i.exec(p);
-    if (m) return { url: 'web/media/' + m[2].replace(/\\/g, '/') + '.png', mask: true };
+    if (m) {
+      // the rounded shapes (see tools/gen-media.js): drawn as CSS boxes with the same corner radius
+      const f = /^rr(\d+)$/.exec(m[2]), l = /^rl(\d+)_(\d+)$/.exec(m[2]);
+      const shape = f ? { kind: 'fill', r: +f[1] } : l ? { kind: 'line', r: +l[1], w: +l[2] } : m[2] === 'shadow' ? { kind: 'shadow', r: 8 } : null;
+      return { url: 'web/media/' + m[2].replace(/\\/g, '/') + '.png', mask: true, shape };
+    }
     if (/WHITE8X8$/i.test(p)) return { url: null, mask: false, white: true };
     const icon = /^Interface\\Icons\\(.+)$/i.exec(p);
     if (icon) return { url: icons['icon:' + icon[1].toLowerCase()] || icons.unknown, mask: false };
@@ -90,24 +95,39 @@
     }
     const css = (e, k, v) => { if (e._s[k] !== v) { e._s[k] = v; e.style[k] = v; } };
     function drawNode(n) {
-      const r = n.rect;
+      let r = n.rect;
       const needs = n.kind === 'tex' || n.kind === 'font' || n.mouse;
       if (!needs) return;
       const show = n.vis && r && n.ealpha > 0.001 && (n.kind !== 'tex' || n.tex || n.color || n.gradient) && (n.kind !== 'font' || n.text);
       if (!show) { const e = els.get(n.id); if (e) css(e, 'display', 'none'); return; }
       const e = el(n);
       css(e, 'display', 'block');
+      const shape = n.kind === 'tex' && n.tex ? texUrl(n.tex).shape : null;
+      const ssc = shape ? host.effScale(n) : 0;
+      // the shadow texture reaches 20 past its panel; the CSS blur does that itself
+      if (shape && shape.kind === 'shadow') r = { l: r.l + 20 * ssc, b: r.b + 20 * ssc, w: Math.max(0, r.w - 40 * ssc), h: Math.max(0, r.h - 40 * ssc) };
       css(e, 'left', r.l + 'px'); css(e, 'top', (host.screen.h - r.b - r.h) + 'px');
       css(e, 'width', r.w + 'px'); css(e, 'height', r.h + 'px');
       css(e, 'zIndex', String(n.z));
       css(e, 'opacity', String(n.ealpha));
       const c = n.clipr;
       css(e, 'clipPath', c ? 'inset(' + Math.max(0, r.b + r.h - c.b - c.h) + 'px ' + Math.max(0, r.l + r.w - c.l - c.w) + 'px ' + Math.max(0, c.b - r.b) + 'px ' + Math.max(0, c.l - r.l) + 'px)' : '');
-      const vkey = n.v + ':' + (n.kind === 'font' ? host.effScale(n) : 0);
+      const vkey = n.v + ':' + (n.kind === 'font' ? host.effScale(n) : ssc);
       if (e._v === vkey) return;
       e._v = vkey;
       if (n.kind === 'tex') {
         const vc = n.vcolor || [1, 1, 1, 1];
+        css(e, 'borderRadius', shape ? shape.r * ssc + 'px' : '');
+        css(e, 'border', shape && shape.kind === 'line' ? Math.max(1, shape.w * ssc) + 'px solid ' + rgba([1, 1, 1, 1], vc) : '');
+        if (shape) {
+          css(e, 'maskImage', ''); css(e, 'webkitMaskImage', ''); css(e, 'transform', '');
+          css(e, 'mixBlendMode', n.blend === 'ADD' ? 'plus-lighter' : '');
+          const g = n.gradient;
+          const fill = g ? 'linear-gradient(' + (g[0] === 'VERTICAL' ? 'to top' : 'to right') + ',' + rgba(g[1], vc) + ',' + rgba(g[2], vc) + ')' : rgba([1, 1, 1, 1], vc);
+          css(e, 'background', shape.kind === 'line' ? 'transparent' : fill);
+          css(e, 'filter', shape.kind === 'shadow' ? 'blur(' + 9 * ssc + 'px)' : '');
+          return;
+        }
         css(e, 'transform', n.rot ? 'rotate(' + (-n.rot) + 'rad)' : '');
         css(e, 'mixBlendMode', n.blend === 'ADD' ? 'plus-lighter' : '');
         if (n.gradient) {

@@ -117,6 +117,9 @@ function Texture:SetGradient(orient, c1, c2)
   if type(c1) ~= 'table' or type(c2) ~= 'table' then error('SetGradient: colours made with CreateColor expected', 2) end
   N.gradient(self.__id, orient, c1.r, c1.g, c1.b, c1.a or 1, c2.r, c2.g, c2.b, c2.a or 1)
 end
+-- slicing: the web page draws the addon's rounded shapes (Media\rr*, rl*, shadow) as CSS boxes, so the margins only matter in the game
+function Texture:SetTextureSliceMargins(l, t, r, b) num(l, 'SetTextureSliceMargins'); num(t, 'SetTextureSliceMargins'); num(r, 'SetTextureSliceMargins'); num(b, 'SetTextureSliceMargins'); N.slice(self.__id, l, t, r, b) end
+function Texture:SetTextureSliceMode() end
 function Texture:SetSnapToPixelGrid() end
 function Texture:SetTexelSnappingBias() end
 function Texture:SetHorizTile() end

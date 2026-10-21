@@ -408,7 +408,7 @@ G.MICRO, G.ORDER = MICRO, ORDER
 A.WareGame = G
 A.RegisterGame({
   key = 'ware', name = 'Warlock Ware', order = 5, ready = true, icon = A.SPELLS.lifeTap.id,
-  tagline = 'Micro-games of a few seconds each. Life Tap! Spell queue! Catch the proc!',
+  tagline = 'Micro-games of a few seconds. Life Tap! Catch the proc!',
   bestLine = function() local b = A.db('ware').best; return b and b > 0 and ('Best: ' .. b .. ' cleared') or 'Play' end,
   help = {
     '|cffffd040Tiny challenges, one after another, a few seconds each.|r A word tells you what to do - be quick!',

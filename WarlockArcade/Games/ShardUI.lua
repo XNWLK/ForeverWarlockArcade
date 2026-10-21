@@ -1015,7 +1015,7 @@ end
 
 A.RegisterGame({
   key = 'shard', name = 'Shard & Mult', order = 1, ready = true, icon = A.SPELLS.soulFire.id,
-  tagline = 'Poker hands of Warlock spells. Talents are your jokers, Molten Core bosses the blinds.',
+  tagline = 'Poker hands of Warlock spells - talents are your jokers.',
   bestLine = function()
     local db = A.db('shard')
     if not db.best then return db.run and 'Run in progress' or 'Play' end

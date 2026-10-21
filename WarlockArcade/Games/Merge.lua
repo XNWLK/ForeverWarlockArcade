@@ -291,7 +291,7 @@ end
 
 A.RegisterGame({
   key = 'merge', name = 'Demon 2048', order = 8, ready = true, icon = A.PETS.imp.spell,
-  tagline = 'Merge soul shards into ever bigger demons - all the way to the Demon Lord.',
+  tagline = 'Merge soul shards into ever bigger demons.',
   bestLine = function() local b = A.db('merge').best; return b and b > 0 and ('Best: ' .. K.num(b)) or 'Play' end,
   help = {
     '|cffffd040Slide all tiles at once.|r Two of the same demon that bump into each other merge into the next one.',

@@ -256,7 +256,7 @@ end
 
 A.RegisterGame({
   key = 'higher', name = 'Higher or Lower', order = 3, ready = true, icon = A.SPELLS.baneOfDoom.id,
-  tagline = 'Which build sims higher? Which spell hits harder? Guess right, keep your streak.',
+  tagline = 'Which build sims higher? Which spell hits harder?',
   bestLine = function() local b = A.db('higher').best; return b and b > 0 and ('Best streak: ' .. b) or 'Play' end,
   help = {
     '|cffffd040The left card shows its number. Is the right card\'s number higher or lower?|r A tie counts as right either way.',
