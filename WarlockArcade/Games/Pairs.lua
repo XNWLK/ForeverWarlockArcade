@@ -115,6 +115,9 @@ function G:cardView(i)
 end
 function G:newGame()
   local z = P.SIZES[self.size]
+  -- a new board: cards still turning from the last one stop where they are
+  for _, v in ipairs(self.views) do K.tweens[v] = nil; v.turned = nil end
+  self.backIn = nil
   self.s = P.new(self.size, math.random(1, 2000000000))
   local cs = min(floor((AW - (z.cols - 1) * 10) / z.cols), floor((AH - (z.rows - 1) * 10) / z.rows))
   local x0 = 8 + (AW - (z.cols * cs + (z.cols - 1) * 10)) / 2
@@ -140,8 +143,9 @@ function G:Show() self.f:Show(); if not self.s then self:newGame() else self:ref
 function G:Hide() self.f:Hide(); GameTooltip:Hide() end
 
 function G:paint(v, up, found)
-  if up then
-    v.icon:SetTexture(K.spellTexture(self.s.cards[v.i].pic)); v.icon:Show(); v.sigil:Hide()
+  local card = self.s.cards[v.i]
+  if up and card then
+    v.icon:SetTexture(K.spellTexture(card.pic)); v.icon:Show(); v.sigil:Hide()
     K.fill(v.back, 0.16, 0.12, 0.22, 1)
     if found then v.line:SetVertexColor(C.good[1], C.good[2], C.good[3], 1) else v.line:SetVertexColor(C.gold[1], C.gold[2], C.gold[3], 1) end
   else

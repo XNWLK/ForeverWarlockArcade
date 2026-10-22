@@ -19,10 +19,10 @@ local function buildIcon(key) local b = RES.builds[key]; return b and A.SPELLS[b
 function Q.pool()
   if Q._pool then return Q._pool end
   local kinds = {
-    dps = { label = 'DPS of the build', unit = ' DPS', list = {} },
-    dmg = { label = 'Damage over the fight', unit = ' damage', list = {} },
-    casts = { label = 'Casts in the fight', unit = ' casts', list = {} },
-    weight = { label = 'DPS for one more ...', unit = ' DPS', list = {} },
+    dps = { label = 'DPS of the build', short = 'build DPS', unit = ' DPS', list = {} },
+    dmg = { label = 'Damage over the fight', short = 'spell damage', unit = ' damage', list = {} },
+    casts = { label = 'Casts in the fight', short = 'casts', unit = ' casts', list = {} },
+    weight = { label = 'DPS for one more ...', short = 'stat worth', unit = ' DPS', list = {} },
   }
   for _, r in ipairs(RES.dps) do
     table.insert(kinds.dps.list, { title = buildName(r.build), sub = (r.race == 'no racial' and 'No racial' or r.race) .. ' - how much DPS?', icon = buildIcon(r.build), value = r.dps })
@@ -247,7 +247,7 @@ function G:refresh()
   self.practiceBtn:SetStyle(self.daily and 'normal' or 'gold')
   for i, b in ipairs(self.steps) do
     local p = s.points[i]
-    b.n:SetText('Question ' .. i .. ' - ' .. Q.kindOf(s.qs[i].kind).label:lower())
+    b.n:SetText(i .. ' - ' .. Q.kindOf(s.qs[i].kind).short)
     b.p:SetText(p and (p .. ' points') or (i == s.at and 'now' or '-'))
     local c = p and (p >= 90 and C.good or p >= 50 and C.flame or C.bad) or (i == s.at and C.accent or C.line)
     b:SetBorderColor(c[1], c[2], c[3], 1)

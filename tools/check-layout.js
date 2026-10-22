@@ -143,6 +143,29 @@ host.run('__ADDON_NS.games.flappy.obj:flap()'); host.advance(1.5, 1 / 60); check
 host.advance(4, 1 / 60); check('flappy crashed');
 for (let lv = 1; lv <= 6; lv++) { host.run('__ADDON_NS.open("rotation"); __ADDON_NS.games.rotation.obj:open(' + lv + ')'); host.advance(0.2); check('rotation ' + lv); }
 host.run('local g = __ADDON_NS.games.rotation.obj; for k in __ADDON_NS.RotationRules.PUZZLES[6].best:gmatch("%a+") do g:add(k) end; g.reveal = true; g:refresh(true)'); host.advance(1); check('rotation done, best shown');
+
+host.run('__ADDON_NS.open("guessdps")'); host.advance(0.4); check('guessdps question');
+host.run('local g = __ADDON_NS.games.guessdps.obj; g:lock()'); host.advance(0.4); check('guessdps answer');
+host.run('local g = __ADDON_NS.games.guessdps.obj; for i = 1, 9 do g:lock() end'); host.advance(0.4); check('guessdps total');
+host.run('__ADDON_NS.open("crack")'); host.advance(0.3); check('crack start');
+host.run('local g = __ADDON_NS.games.crack.obj; for t = 1, 8 do for i = 1, 4 do g:add(((t + i) % 6) + 1) end; g:submit() end'); host.advance(0.4); check('crack over');
+host.run('__ADDON_NS.open("spelllock"); __ADDON_NS.games.spelllock.obj:play()'); host.advance(6, 1 / 30); check('spelllock casting');
+host.run('local g = __ADDON_NS.games.spelllock.obj; for i = 1, 4 do g:lock(i) end'); host.advance(0.3); check('spelllock locked');
+host.advance(60, 1 / 30); check('spelllock over');
+host.run('__ADDON_NS.open("ritual"); __ADDON_NS.games.ritual.obj:play()'); host.advance(0.9, 1 / 30); check('ritual showing');
+host.advance(3, 1 / 30); host.run('local g = __ADDON_NS.games.ritual.obj; g:press((g.s.seq[1] % 4) + 1)'); host.advance(0.3); check('ritual broken');
+for (let z = 1; z <= 3; z++) { host.run('__ADDON_NS.open("pairs"); local g = __ADDON_NS.games.pairs.obj; g.size = ' + z + '; g:newGame(); g:flip(1); g:flip(2)'); host.advance(0.5); check('pairs size ' + z); }
+host.run('__ADDON_NS.open("snake"); __ADDON_NS.games.snake.obj:play()'); host.advance(1, 1 / 30); check('snake running');
+host.advance(5, 1 / 30); check('snake over');
+host.run('__ADDON_NS.open("runner"); __ADDON_NS.games.runner.obj:jump()'); host.advance(2, 1 / 60); check('runner running');
+host.advance(6, 1 / 60); check('runner over');
+host.run('__ADDON_NS.open("stack"); __ADDON_NS.games.stack.obj:play()'); host.advance(2, 1 / 30); check('stack falling');
+host.run('local g = __ADDON_NS.games.stack.obj; for i = 1, 40 do g:OnKey("SPACE") end'); host.advance(0.5); check('stack over');
+for (let lv = 1; lv <= 8; lv++) { host.run('__ADDON_NS.open("push"); __ADDON_NS.games.push.obj:open(' + lv + ')'); host.advance(0.2); check('push ' + lv); }
+host.run('__ADDON_NS.open("gate"); local g = __ADDON_NS.games.gate.obj; g:newGame(); local s = g.s; local D = __ADDON_NS.GateRules; for i = 1, 4 do D.build(s, i, i, 1) end; g.sel = s.towers[1]; g:refresh(); g:nextWave()'); host.advance(8, 1 / 30); check('gate wave');
+host.run('local g = __ADDON_NS.games.gate.obj; g.sel = nil; g:refresh()'); host.advance(0.2); check('gate building');
+host.run('__ADDON_NS.games.merge.obj:newGame(); __ADDON_NS.open(nil); __ADDON_NS.turnPage(1)'); host.advance(0.5); check('picker, page 2');
+host.run('__ADDON_NS.turnPage(-1)');
 host.run('__ADDON_NS.games.merge.obj:newGame(); __ADDON_NS.open(nil)'); host.advance(0.3); check('picker, all games');
 if (host.errors.length) { console.log('FAIL: Lua error\n' + host.errors.join('\n')); process.exit(1); }
 if (problems.size) { console.log('CHECK (' + problems.size + '):\n  ' + [...problems].join('\n  ')); process.exit(1); }
