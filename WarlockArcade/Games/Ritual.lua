@@ -182,7 +182,7 @@ end
 
 A.RegisterGame({
   key = 'ritual', name = 'Ritual of Summoning', order = 20, ready = true, kind = 'action', icon = A.PETS.succubus.spell,
-  tagline = 'Repeat the demons\' runes. One more every round.',
+  tagline = 'Repeat the demon runes. One more each round.',
   bestLine = function() local b = A.db('ritual').best; return b and b > 0 and ('Best: ' .. b .. ' runes') or 'Play' end,
   help = {
     '|cffffd040Watch the demon runes light up, then repeat them in the same order.|r Click them, press 1-4, or use the arrow keys (up Imp, right Voidwalker, down Succubus, left Felhunter).',

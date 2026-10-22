@@ -101,6 +101,7 @@ function G:build()
   self.layer = CreateFrame('Frame', nil, board)
   self.layer:SetAllPoints()
   self.layer:SetFrameLevel(board:GetFrameLevel() + 2)
+  self.headGlow = K.shape(self.layer, 'BACKGROUND', 'glow'); self.headGlow:SetSize(CS * 4, CS * 4); self.headGlow:SetVertexColor(0.75, 0.45, 1, 0.55)
   self.soul = K.shape(self.layer, 'ARTWORK', 'glow'); self.soul:SetSize(CS * 1.8, CS * 1.8)
   self.soulCore = K.shape(self.layer, 'ARTWORK', 'spark', 1); self.soulCore:SetSize(CS, CS)
   self.shard = K.shape(self.layer, 'ARTWORK', 'glow'); self.shard:SetSize(CS * 2, CS * 2); self.shard:SetVertexColor(1, 0.8, 0.3, 0.9)
@@ -138,7 +139,7 @@ function G:seg(i)
   local v = self.segs[i]
   if not v then
     v = K.shape(self.layer, 'ARTWORK', 'rr6', -1)
-    v:SetSize(CS - 2, CS - 2)
+    v:SetSize(CS - 1, CS - 1)
     self.segs[i] = v
   end
   return v
@@ -170,6 +171,7 @@ function G:draw()
     local f = 1 - (i - 1) / max(1, n)
     if i == 1 then v:SetVertexColor(0.9, 0.7, 1, 1) else v:SetVertexColor(0.35 + 0.35 * f, 0.15 + 0.2 * f, 0.6 + 0.35 * f, 0.6 + 0.4 * f) end
     v:Show()
+    if i == 1 then self.headGlow:ClearAllPoints(); self.headGlow:SetPoint('CENTER', self.board, 'TOPLEFT', x, y) end
   end
   for i = n + 1, #self.segs do self.segs[i]:Hide() end
   local x, y = self:cell(s.soul[1], s.soul[2])

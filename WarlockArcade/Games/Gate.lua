@@ -459,7 +459,7 @@ function G:refresh()
     self.upBtn:SetEnabled(up ~= nil and s.gold >= up); self.sellBtn:SetEnabled(true)
     local x, y = 8 + (t.c + 0.5) * D.CELL, -8 - (t.r + 0.5) * D.CELL
     local rr = T.range * D.CELL * 2
-    self.range:SetSize(rr, rr); self.range:ClearAllPoints(); self.range:SetPoint('CENTER', self.board, 'TOPLEFT', x, y); self.range:SetVertexColor(1, 0.85, 0.4, 0.6); self.range:Show()
+    self.range:SetSize(rr, rr); self.range:ClearAllPoints(); self.range:SetPoint('CENTER', self.board, 'TOPLEFT', x, y); self.range:SetVertexColor(1, 0.85, 0.4, 0.3); self.range:Show()
     self.rangeFill:SetSize(rr, rr); self.rangeFill:ClearAllPoints(); self.rangeFill:SetPoint('CENTER', self.board, 'TOPLEFT', x, y); self.rangeFill:SetVertexColor(1, 0.85, 0.4, 0.07); self.rangeFill:Show()
   else
     self.info:SetText('Building: ' .. A.SPELLS[T.key].name .. ' tower (' .. T.cost .. ' gold)\n' .. T.note .. '\nClick an empty square beside the road. Click a tower to choose it; right-click sells.')

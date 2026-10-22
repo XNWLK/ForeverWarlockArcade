@@ -205,10 +205,10 @@ function G:build()
     local b = K.text(side, size or 22, color or C.text, 'LEFT', K.FONT_NUM); b:SetPoint('TOPLEFT', 14, y - 15)
     return b
   end
-  self.scoreT = stat(-104, 'Damage dealt', 26, C.gold)
-  self.linesT = stat(-160, 'Rows broken / level', 18)
-  self.bestT = stat(-206, 'Best', 16, C.dim)
-  local legend = K.text(side, 11, C.dim, 'LEFT'); legend:SetPoint('TOPLEFT', 14, -252); legend:SetPoint('TOPRIGHT', -12, -252); legend:SetWordWrap(true); legend:SetSpacing(2)
+  self.scoreT = stat(-90, 'Damage dealt', 24, C.gold)
+  self.linesT = stat(-138, 'Rows broken / level', 16)
+  self.bestT = stat(-180, 'Best', 15, C.dim)
+  local legend = K.text(side, 11, C.dim, 'LEFT'); legend:SetPoint('TOPLEFT', 14, -222); legend:SetPoint('TOPRIGHT', -12, -222); legend:SetWordWrap(true); legend:SetSpacing(2)
   local parts = {}
   for i, key in ipairs(T.CLEARS) do parts[i] = i .. ' row' .. (i > 1 and 's' or '') .. ': ' .. A.SPELLS[key].name .. ' ' .. K.paint(C.gold, K.num(T.damage(key))) end
   legend:SetText('Rows broken together cast a spell once per row, times the level:\n' .. table.concat(parts, '\n'))

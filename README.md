@@ -28,6 +28,16 @@ The games use real numbers from the [Forever Warlock Sim](https://xnwlk.github.i
 | **Felsweeper** | Infernals are buried in the field: open every safe square, the numbers tell how many Infernals touch it. Three sizes, best times kept. | Playable |
 | **Flappy Imp** | Flap the Imp through the gaps between the lava pillars of Molten Core and collect soul shards. | Playable |
 | **Perfect Rotation** | Six short fights: put the casts in the order that deals the most damage - real cast times, mana and DoT ticks, clipping included. Stars against the best order a search found. | Playable |
+| **Guess the DPS** | How much DPS does a build do, how much damage does a spell deal in it, how often is it cast, what is 1% crit worth? Slide to your guess of the sim's own numbers; a daily round of five. | Playable |
+| **Crack the Opener** | A hidden opener of four casts from six spells. Gold mark: right spell, right slot; silver: right spell, wrong slot. Eight tries; a new one every day. | Playable |
+| **Spell Lock!** | Four casters cast real Warlock spells at you; a cast that gets through hits for its real damage. Your Felhunter's Spell Lock needs a moment to come back: stop the ones that hurt most. | Playable |
+| **Ritual of Summoning** | Repeat the demon runes as they light up - one more every round, a little faster each time. | Playable |
+| **Grimoire Pairs** | Turn the grimoire's pages two at a time and find every pair of spell icons, in as few turns as you can. | Playable |
+| **Drain Snake** | Steer your Drain Soul beam to the souls; every soul makes it longer and faster. | Playable |
+| **Fel Runner** | Run through Molten Core: jump the fire and the Core Hounds, duck under the fire bats. | Playable |
+| **Shard Stack** | Fill whole rows with the falling shard pieces; rows broken together cast Shadow Bolt, Immolate, Soul Fire or Rain of Fire for their real damage. | Playable |
+| **Pentagram Push** | Push every soul shard onto a pentagram - one at a time, never pull. Eight hand-made rituals, stars for the fewest moves. | Playable |
+| **Demon Gate** | Build spell towers beside the road: Searing Pain, Shadow Bolt, Corruption, Immolate, Hellfire and Curse of the Elements with their real numbers. Fifteen waves. | Playable |
 
 ## In the game
 

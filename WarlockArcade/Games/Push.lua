@@ -181,8 +181,10 @@ function G:open(n)
     if s.wall[k] then tile('BORDER', 'rr6', x, y, 1, 0.28, 0.2, 0.36, 1)
     elseif floorSet[k] then tile('BACKGROUND', 'rr4', x, y, 1, 0.1, 0.08, 0.14, 1) end
     if s.goal[k] then
-      tile('ARTWORK', 'glow', x, y, -6, 0.75, 0.35, 1, 0.55)
-      tile('ARTWORK', 'spark', x, y, 6, 0.85, 0.6, 1, 0.9)
+      -- a pentagram: a fel-green ritual circle (the shards are the purple gems)
+      tile('ARTWORK', 'glow', x, y, -4, 0.4, 1, 0.35, 0.35)
+      tile('ARTWORK', 'ring', x, y, 6, 0.5, 1, 0.4, 0.9)
+      tile('ARTWORK', 'spark', x, y, 12, 0.7, 1, 0.55, 0.9)
     end
   end end
   self.me:SetSize(self.cs - 8, self.cs - 8)

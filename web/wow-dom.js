@@ -112,7 +112,8 @@
       css(e, 'opacity', String(n.ealpha));
       const c = n.clipr;
       css(e, 'clipPath', c ? 'inset(' + Math.max(0, r.b + r.h - c.b - c.h) + 'px ' + Math.max(0, r.l + r.w - c.l - c.w) + 'px ' + Math.max(0, c.b - r.b) + 'px ' + Math.max(0, c.l - r.l) + 'px)' : '');
-      const vkey = n.v + ':' + (n.kind === 'font' ? host.effScale(n) : ssc);
+      // the size counts too: a texture's picture is sized from its box (a card turning narrows it to nothing and back)
+      const vkey = n.v + ':' + (n.kind === 'font' ? host.effScale(n) : ssc) + ':' + Math.round(r.w) + 'x' + Math.round(r.h);
       if (e._v === vkey) return;
       e._v = vkey;
       if (n.kind === 'tex') {

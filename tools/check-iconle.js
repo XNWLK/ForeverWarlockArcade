@@ -54,7 +54,7 @@ function IPLAY(win)
   if win then
     -- type the answer's name to search, then Enter
     local name = a.names[1]
-    for ch in name:gmatch('%a') do g:OnKey(ch:upper()) end
+    for ch in name:gmatch('.') do if ch == ' ' then g:OnKey('SPACE') elseif ch:match('%a') then g:OnKey(ch:upper()) end end
     out[#out + 1] = g.matches .. ' found'
     if g.matches ~= 1 then CLICK(btnOf(g, name)) else g:OnKey('ENTER') end
   else

@@ -16,7 +16,7 @@ local function rng(seed)
 end
 function P.new(size, seed)
   local z = P.SIZES[size]
-  local n = z.cols * z.rows / 2
+  local n = floor(z.cols * z.rows / 2)   -- a whole number (5.3 would print 12.0)
   local rand = rng(seed or 1)
   local pics = {}
   for _, a in ipairs(A.IconleRules.answers()) do pics[#pics + 1] = a.icon end

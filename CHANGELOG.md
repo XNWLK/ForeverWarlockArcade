@@ -1,5 +1,20 @@
 # Changelog
 
+## v0.2.0
+- Ten more games - **26** in all:
+  - **Guess the DPS** - guess the sim's own numbers (build DPS, spell damage, casts, stat worth); a daily round.
+  - **Crack the Opener** - a hidden opener of four casts, gold and silver marks, eight tries; a daily one.
+  - **Spell Lock!** - stop enemy casts with your Felhunter; casts that get through hit for their real damage.
+  - **Ritual of Summoning** - repeat the demon runes, one more every round.
+  - **Grimoire Pairs** - find the pairs of spell icons in three sizes.
+  - **Drain Snake** - steer your Drain Soul beam to the souls.
+  - **Fel Runner** - jump the fire and the Core Hounds, duck the bats.
+  - **Shard Stack** - fill whole rows with falling shards; rows cast spells for their real damage.
+  - **Pentagram Push** - push the soul shards onto the pentagrams, eight hand-made rituals.
+  - **Demon Gate** - spell towers with the spells' real numbers against fifteen waves.
+- The game picker shows sixteen games a page: the arrows, the mouse wheel or Left / Right turn the page.
+- Installs into the live client's folder: `World of Warcraft\_forever_\Interface\AddOns`.
+
 ## v0.1.0
 - The arcade: a game picker, in the browser and as an addon (`/arcade` in the game).
 - **Shard & Mult**, a poker-hand roguelike with Warlock spells: Shadow Bolt, Corruption, Immolate and Incinerate are

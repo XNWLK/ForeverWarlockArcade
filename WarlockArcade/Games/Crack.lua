@@ -180,7 +180,7 @@ function G:refresh()
     local active = not s.done and r == #s.tries + 1
     row:SetBorderColor(active and C.accent[1] or C.line[1], active and C.accent[2] or C.line[2], active and C.accent[3] or C.line[3], 1)
     for i, slot in ipairs(row.slots) do
-      local v = t and t.guess[i] or (active and self.cur[i])
+      local v = t and t.guess[i] or (active and self.cur[i]) or nil
       slot.icon:SetShown(v ~= nil)
       if v then slot.icon:SetTexture(K.spellTexture(A.SPELLS[X.SPELLS[v]].id)) end
     end
