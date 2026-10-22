@@ -33,3 +33,5 @@ Games\SpellLock.lua
 Games\Ritual.lua
 Games\Pairs.lua
 Games\Snake.lua
+Games\Runner.lua
+Games\Stack.lua
