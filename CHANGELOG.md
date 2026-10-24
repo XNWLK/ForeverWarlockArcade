@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.2.1
+- The newest numbers from the Forever Warlock Sim: the Aff Pact Shadow Bolt build is retired (six builds now), "SM Ruin (classic)" is just **SM Ruin**, and build DPS and stat weights follow the sim's latest demon melee numbers. Higher or Lower and Guess the DPS use them.
+
 ## v0.2.0
 - Ten more games - **26** in all:
   - **Guess the DPS** - guess the sim's own numbers (build DPS, spell damage, casts, stat worth); a daily round.
