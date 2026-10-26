@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.2.3
+- The Forever Warlock Sim's default fight is 3 minutes again (fights will be longer than 2 minutes): build DPS, spell damage and stat weights in Higher or Lower and Guess the DPS follow, about 1-2% lower.
+
 ## v0.2.2
 - The racials from the WoW: Forever patch notes, through the Forever Warlock Sim: Human Ruthless is +1% crit and The Human Spirit +10% Spirit; Orc loses Savage and gets Command back (+5% demon damage). Build DPS per race, spell damage and stat weights in Higher or Lower and Guess the DPS follow.
 
