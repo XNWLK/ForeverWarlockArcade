@@ -2,7 +2,7 @@
 ## Title: Forever Warlock Arcade
 ## Notes: Little Warlock games on the Forever Warlock Sim's numbers. Type /arcade
 ## Author: Xn
-## Version: 0.2.1
+## Version: 0.2.2
 ## X-Website: https://github.com/XNWLK/ForeverWarlockArcade
 ## SavedVariables: WarlockArcadeDB
 ## IconTexture: Interface\Icons\Spell_Fire_Fireball02

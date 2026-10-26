@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.2.2
+- The racials from the WoW: Forever patch notes, through the Forever Warlock Sim: Human Ruthless is +1% crit and The Human Spirit +10% Spirit; Orc loses Savage and gets Command back (+5% demon damage). Build DPS per race, spell damage and stat weights in Higher or Lower and Guess the DPS follow.
+
 ## v0.2.1
 - The newest numbers from the Forever Warlock Sim: the Aff Pact Shadow Bolt build is retired (six builds now), "SM Ruin (classic)" is just **SM Ruin**, and build DPS and stat weights follow the sim's latest demon melee numbers. Higher or Lower and Guess the DPS use them.
 
