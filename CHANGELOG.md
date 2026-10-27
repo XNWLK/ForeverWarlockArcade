@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.2.4
+- More racials from the WoW: Forever patch notes, through the Forever Warlock Sim: Orc Blood Fury has a 2 minute cooldown (was 3), Undead Touch of the Grave a 15 s internal cooldown (was 25). Build DPS per race in Higher or Lower and Guess the DPS follows.
+
 ## v0.2.3
 - The Forever Warlock Sim's default fight is 3 minutes again (fights will be longer than 2 minutes): build DPS, spell damage and stat weights in Higher or Lower and Guess the DPS follow, about 1-2% lower.
 
