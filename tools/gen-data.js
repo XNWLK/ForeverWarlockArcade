@@ -1,20 +1,22 @@
 // Writes WarlockArcade/Data.lua (the numbers and texts the games use) and web/icons.js (the icons the web page shows)
 // from the DPS sim's own data files, so no number is copied by hand. Only the sim's COMMITTED files are read
-// (git archive of HEAD), never work in progress in the sim's folder.
+// (git archive of HEAD, or of the SIM_REF environment variable, e.g. SIM_REF=origin/main for only what the sim pushed),
+// never work in progress in the sim's folder.
 //   node tools/gen-data.js            (sim folder: ../wow-forever-warlock-sim, or the SIM_DIR environment variable)
 const fs = require('fs'), path = require('path'), os = require('os'), cp = require('child_process');
 const ROOT = path.join(__dirname, '..');
 const SIM = process.env.SIM_DIR || path.join(ROOT, '..', 'wow-forever-warlock-sim');
 
-const commit = cp.execSync('git -C "' + SIM + '" rev-parse --short HEAD').toString().trim();
+const REF = process.env.SIM_REF || 'HEAD';
+const commit = cp.execSync('git -C "' + SIM + '" rev-parse --short ' + REF).toString().trim();
 const dirty = cp.execSync('git -C "' + SIM + '" status --short -- data engine').toString().trim();
 if (dirty) console.log('NOTE: the sim folder has uncommitted changes (not used here):\n' + dirty);
 const COPY = path.join(os.tmpdir(), 'warlock-arcade-sim-' + commit);
 if (!fs.existsSync(path.join(COPY, 'tools', 'load-wl.js'))) {
-  const files = cp.execSync('git -C "' + SIM + '" ls-tree -r --name-only HEAD data engine tools/load-wl.js').toString().trim().split(/\r?\n/);
+  const files = cp.execSync('git -C "' + SIM + '" ls-tree -r --name-only ' + REF + ' data engine tools/load-wl.js').toString().trim().split(/\r?\n/);
   files.forEach(f => {
     const dst = path.join(COPY, f); fs.mkdirSync(path.dirname(dst), { recursive: true });
-    fs.writeFileSync(dst, cp.execSync('git -C "' + SIM + '" show HEAD:' + f, { maxBuffer: 64 << 20 }));
+    fs.writeFileSync(dst, cp.execSync('git -C "' + SIM + '" show ' + REF + ':' + f, { maxBuffer: 64 << 20 }));
   });
 }
 const WL = require(path.join(COPY, 'tools', 'load-wl.js')).load(COPY, ['data/tooltips.js', 'data/icons.js']);
