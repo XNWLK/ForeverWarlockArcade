@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.2.5
+- The Forever Warlock Sim's newest numbers: Destro Incinerate Imp is retired (five builds now), Wrack Succubus casts Shadow Bolt when its DoTs have under 4 s left, the other builds use a smarter Life Tap, and Troll Berserking lasts 15 s (patch notes). Build DPS, spell damage and stat weights in Higher or Lower and Guess the DPS follow.
+
 ## v0.2.4
 - More racials from the WoW: Forever patch notes, through the Forever Warlock Sim: Orc Blood Fury has a 2 minute cooldown (was 3), Undead Touch of the Grave a 15 s internal cooldown (was 25). Build DPS per race in Higher or Lower and Guess the DPS follows.
 
