@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.2.7
+- New build names from the Forever Warlock Sim: **Shadow Demo** (was Demo Pact Shadow Bolt Succubus), **Fire Demo** (was Demo Pact Fire Imp) and **Incinerate Pandemic** (was Destro Incinerate Succubus). The builds and their numbers are the same.
+
 ## v0.2.6
 - The Forever Warlock Sim's new build list: SM Ruin is retired, Wrack Succubus becomes **Wrack DS** and **Incinerate DS** is new (both sacrifice their demon, no pet out); Wrack DS no longer casts Siphon Life. Five builds: Demo Pact Shadow Bolt Succubus, Demo Pact Fire Imp, Destro Incinerate Succubus, Incinerate DS and Wrack DS. Higher or Lower and Guess the DPS use their numbers.
 
