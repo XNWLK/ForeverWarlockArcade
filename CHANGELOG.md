@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.2.6
+- The Forever Warlock Sim's new build list: SM Ruin is retired, Wrack Succubus becomes **Wrack DS** and **Incinerate DS** is new (both sacrifice their demon, no pet out); Wrack DS no longer casts Siphon Life. Five builds: Demo Pact Shadow Bolt Succubus, Demo Pact Fire Imp, Destro Incinerate Succubus, Incinerate DS and Wrack DS. Higher or Lower and Guess the DPS use their numbers.
+
 ## v0.2.5
 - The Forever Warlock Sim's newest numbers: Destro Incinerate Imp is retired (five builds now), Wrack Succubus casts Shadow Bolt when its DoTs have under 4 s left, the other builds use a smarter Life Tap, and Troll Berserking lasts 15 s (patch notes). Build DPS, spell damage and stat weights in Higher or Lower and Guess the DPS follow.
 
