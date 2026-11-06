@@ -9,7 +9,7 @@ A.W, A.H = 960, 640
 A.games, A.order = {}, {}
 
 -- ---- saved settings ----
-local DEFAULTS = { scale = 1, sound = true, speed = 1, games = {} }
+local DEFAULTS = { scale = 1, sound = true, speed = 1, games = {}, minimap = true, minimapAngle = 170 }
 function A.db(game)
   WarlockArcadeDB = WarlockArcadeDB or {}
   local db = WarlockArcadeDB
@@ -391,6 +391,71 @@ function A.toggle()
   if W:IsShown() then W:Hide() else W:Show(); A.sound('open'); if not A.current then A.refreshPicker() end end
 end
 
+-- ---- the minimap button (game only): click opens or closes the window, drag moves it around the minimap ----
+-- An own button parented to the minimap; nothing of the game's is changed.
+local mapButton
+local function minimap() return Minimap or (MinimapCluster and MinimapCluster.Minimap) end
+
+local function placeMapButton()
+  local mm = minimap()
+  if not (mapButton and mm) then return end
+  local a = math.rad(tonumber(A.db().minimapAngle) or 170)
+  local r = (mm:GetWidth() or 140) / 2 + 10
+  mapButton:ClearAllPoints()
+  mapButton:SetPoint('CENTER', mm, 'CENTER', math.cos(a) * r, math.sin(a) * r)
+end
+
+-- while dragged: the angle from the minimap's centre to the mouse
+local function followMouse()
+  local mm = minimap()
+  local mx, my = mm:GetCenter()
+  local cx, cy = GetCursorPosition()
+  local scale = mm:GetEffectiveScale()
+  if not (mx and cx and scale and scale > 0) then return end
+  local atan2 = math.atan2 or math.atan
+  A.db().minimapAngle = floor(math.deg(atan2(cy / scale - my, cx / scale - mx)) + 0.5) % 360
+  placeMapButton()
+end
+
+local function makeMapButton()
+  local mm = minimap()
+  if mapButton or A.WEB or not mm then return end
+  local b = CreateFrame('Button', 'WarlockArcadeMinimapButton', mm)
+  mapButton = b
+  b:SetSize(31, 31)
+  b:SetFrameStrata('MEDIUM')
+  b:SetFrameLevel((mm:GetFrameLevel() or 0) + 8)
+  b:RegisterForClicks('LeftButtonUp', 'RightButtonUp')
+  b:RegisterForDrag('LeftButton')
+  local bg = b:CreateTexture(nil, 'BACKGROUND')
+  bg:SetTexture('Interface\\Minimap\\UI-Minimap-Background'); bg:SetSize(20, 20); bg:SetPoint('TOPLEFT', 7, -5)
+  local icon = b:CreateTexture(nil, 'ARTWORK')
+  icon:SetTexture('Interface\\Icons\\Spell_Fire_Fireball02'); icon:SetSize(17, 17); icon:SetPoint('TOPLEFT', 7, -6)
+  icon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
+  local border = b:CreateTexture(nil, 'OVERLAY')
+  border:SetTexture('Interface\\Minimap\\MiniMap-TrackingBorder'); border:SetSize(53, 53); border:SetPoint('TOPLEFT', 0, 0)
+  b:SetHighlightTexture('Interface\\Minimap\\UI-Minimap-ZoomButton-Highlight')
+  b:SetScript('OnClick', function() A.toggle() end)
+  b:SetScript('OnDragStart', function(self) self:SetScript('OnUpdate', followMouse) end)
+  b:SetScript('OnDragStop', function(self) self:SetScript('OnUpdate', nil) end)
+  b:SetScript('OnEnter', function(self)
+    GameTooltip:SetOwner(self, 'ANCHOR_LEFT')
+    GameTooltip:SetText(A.NAME, 0.58, 0.51, 0.79)
+    GameTooltip:AddLine('Click: open or close the arcade', 1, 1, 1)
+    GameTooltip:AddLine('Drag: move this button', 0.7, 0.7, 0.7)
+    GameTooltip:AddLine('/arcade minimap hides it', 0.7, 0.7, 0.7)
+    GameTooltip:Show()
+  end)
+  b:SetScript('OnLeave', function() GameTooltip:Hide() end)
+end
+
+function A.updateMapButton()
+  if A.db().minimap then
+    makeMapButton()
+    if mapButton then placeMapButton(); mapButton:Show() end
+  elseif mapButton then mapButton:Hide() end
+end
+
 -- ---- start ----
 local boot = CreateFrame('Frame')
 boot:RegisterEvent('ADDON_LOADED')
@@ -399,6 +464,7 @@ boot:SetScript('OnEvent', function(self, event, name)
   self:UnregisterEvent('ADDON_LOADED')
   A.db()
   build()
+  A.updateMapButton()
 end)
 
 SLASH_WARLOCKARCADE1 = '/arcade'
@@ -411,6 +477,10 @@ SlashCmdList.WARLOCKARCADE = function(msg)
   elseif msg:match('^scale') then
     local s = tonumber(msg:match('^scale%s+([%d%.]+)'))
     if s and s >= 0.5 and s <= 1.5 and W then A.db().scale = s; W:SetScale(s) end
+  elseif msg == 'minimap' then
+    A.db().minimap = not A.db().minimap
+    A.updateMapButton()
+    print('|cff9482c9' .. A.NAME .. ':|r minimap button ' .. (A.db().minimap and 'shown.' or 'hidden. /arcade minimap brings it back.'))
   else
     A.toggle()
   end

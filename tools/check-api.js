@@ -23,6 +23,8 @@ const GUARDED = {
   UISpecialFrames: "the game's list of windows Escape closes (a table, the lists hold functions); used the way ItemRack and the Warlock Sim addon do",
   WOW_WEB: 'set only by the web page (web/wow-dom.js); nil in the game',
   GameTooltip: "the game's tooltip frame", UIParent: "the game's main frame",
+  Minimap: 'the minimap (named in its layout file, not on the frame list); "or MinimapCluster.Minimap" fallback, tested before use; the Warlock Sim addon uses it the same way',
+  WarlockArcadeMinimapButton: "the addon's minimap button",
 };
 const strip = src => src.replace(/--\[(=*)\[[\s\S]*?\]\1\]/g, ' ').replace(/--[^\n]*/g, ' ')
   .replace(/\[(=*)\[[\s\S]*?\]\1\]/g, m => '"' + ' '.repeat(Math.max(0, m.length - 2)) + '"');
