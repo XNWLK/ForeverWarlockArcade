@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.2.8
+- A **minimap button**: click it to open or close the arcade, drag it to move it around the minimap. `/arcade minimap` (or `/fwa minimap`) hides it or brings it back.
+
 ## v0.2.7
 - New build names from the Forever Warlock Sim: **Shadow Demo** (was Demo Pact Shadow Bolt Succubus), **Fire Demo** (was Demo Pact Fire Imp) and **Incinerate Pandemic** (was Destro Incinerate Succubus). The builds and their numbers are the same.
 
