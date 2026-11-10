@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.2.9
+- The Forever Wrack patch of 2026-11-10, from the Forever Warlock Sim: Wrack hits for 70% of what it did and no longer adds 10% to your DoTs; instead, while it channels, Corruption, Bane of Agony and Siphon Life tick twice as often. **Wrack DS** uses Bane of Agony and Siphon Life again and goes up (Undead 667.7 to 686.7 DPS). The other builds are unchanged. Higher or Lower, Guess the DPS and Type to Cast use the new numbers.
+
 ## v0.2.8
 - A **minimap button**: click it to open or close the arcade, drag it to move it around the minimap. `/arcade minimap` (or `/fwa minimap`) hides it or brings it back.
 
