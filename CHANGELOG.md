@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.2.11
+- The Forever Warlock Sim's Demo builds have new talents: Fire Demo takes Demonic Embrace 4, Demonic Energies 1 and Demonic Brand 2; Shadow Demo takes Demonic Embrace 3, Demonic Energies 1 and Demonic Brand 3. Fire Demo moves by less than 1 DPS (Human 709, Undead 716.2), and Shadow Demo Undead is 698.8. Higher or Lower and Guess the DPS use the new numbers.
+
 ## v0.2.10
 - The Forever Warlock Sim's Shadow Demo and Fire Demo now take Demonic Embrace instead of Master Summoner. Only the Undead numbers change, by half a point (Touch of the Grave grows with your health): Shadow Demo 698.6 and Fire Demo 715.9 DPS.
 
