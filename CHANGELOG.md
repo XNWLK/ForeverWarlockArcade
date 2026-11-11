@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.2.12
+- Wrack from the official notes of the Forever patch of 2026-11-10: 60 Shadow damage (+20% of spell power) every second, and the official tooltip text. Wrack DS is 0.3 DPS lower for every race (Undead 686.4). Higher or Lower, Guess the DPS and Type to Cast use the new numbers.
+
 ## v0.2.11
 - The Forever Warlock Sim's Demo builds have new talents: Fire Demo takes Demonic Embrace 4, Demonic Energies 1 and Demonic Brand 2; Shadow Demo takes Demonic Embrace 3, Demonic Energies 1 and Demonic Brand 3. Fire Demo moves by less than 1 DPS (Human 709, Undead 716.2), and Shadow Demo Undead is 698.8. Higher or Lower and Guess the DPS use the new numbers.
 
