@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.2.10
+- The Forever Warlock Sim's Shadow Demo and Fire Demo now take Demonic Embrace instead of Master Summoner. Only the Undead numbers change, by half a point (Touch of the Grave grows with your health): Shadow Demo 698.6 and Fire Demo 715.9 DPS.
+
 ## v0.2.9
 - The Forever Wrack patch of 2026-11-10, from the Forever Warlock Sim: Wrack hits for 70% of what it did and no longer adds 10% to your DoTs; instead, while it channels, Corruption, Bane of Agony and Siphon Life tick twice as often. **Wrack DS** uses Bane of Agony and Siphon Life again and goes up (Undead 667.7 to 686.7 DPS). The other builds are unchanged. Higher or Lower, Guess the DPS and Type to Cast use the new numbers.
 
