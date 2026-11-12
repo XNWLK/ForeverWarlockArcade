@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.2.14
+- The Forever Warlock Sim's newest Wrack model: your DoTs keep their normal ticks, and every half-way point between two ticks that falls inside a Wrack channel gives one extra tick. Wrack DS moves by less than 1 DPS (Undead 689.3). Higher or Lower and Guess the DPS use the new numbers.
+
 ## v0.2.13
 - The Forever Warlock Sim's newest numbers: Amplify Curse now stays up when its Bane of Agony misses, and Wrack DS casts Corruption before Bane of Agony and saves a Shadow Trance proc until it has 8 seconds or less left. Wrack DS goes up about 3 DPS (Undead 689.2) and Incinerate Pandemic about 0.3 (Undead 695.4). Higher or Lower and Guess the DPS use the new numbers.
 
