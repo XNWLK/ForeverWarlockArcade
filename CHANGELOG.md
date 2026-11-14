@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.2.16
+- The Forever Warlock Sim's pre-raid gear now has Phase 1 enchants. Every build gains 28 to 56 DPS, and Shadow Demo moves ahead of Fire Demo (Undead: Wrack DS 900, Shadow Demo 884.8, Fire Demo 864.6, Incinerate Pandemic 863.9, Incinerate DS 842.1). Higher or Lower and Guess the DPS use the new numbers.
+
 ## v0.2.15
 - The Forever Warlock Sim now shows each build in its own Phase 1 pre-raid gear with the best Phase 1 buffs and consumables, and it has a new resist model and set bonuses. Every build gains 120 to 185 DPS, and Wrack DS is now the top build (Undead 872.2, Fire Demo 831.7, Shadow Demo 828.5, Incinerate Pandemic 820.2, Incinerate DS 790.1). Higher or Lower and Guess the DPS use the new numbers and now say "Phase 1 pre-raid gear" instead of "standard gear".
 
