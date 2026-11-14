@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.2.15
+- The Forever Warlock Sim now shows each build in its own Phase 1 pre-raid gear with the best Phase 1 buffs and consumables, and it has a new resist model and set bonuses. Every build gains 120 to 185 DPS, and Wrack DS is now the top build (Undead 872.2, Fire Demo 831.7, Shadow Demo 828.5, Incinerate Pandemic 820.2, Incinerate DS 790.1). Higher or Lower and Guess the DPS use the new numbers and now say "Phase 1 pre-raid gear" instead of "standard gear".
+
 ## v0.2.14
 - The Forever Warlock Sim's newest Wrack model: your DoTs keep their normal ticks, and every half-way point between two ticks that falls inside a Wrack channel gives one extra tick. Wrack DS moves by less than 1 DPS (Undead 689.3). Higher or Lower and Guess the DPS use the new numbers.
 
