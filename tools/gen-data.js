@@ -104,7 +104,7 @@ USE.forEach(k => {
     : { name: c.name, item: c.id, text: c.desc };
 });
 
-// the sim's own published results (data/default-results.js: every ready build, every race, 120 s fights, standard gear)
+// the sim's own published results (data/default-results.js: every ready build, every race; since sim v181 each build in its own Phase 1 pre-raid gear)
 let hl = null;
 {
   const ctx = {}; ctx.window = ctx; vm.createContext(ctx);
@@ -113,7 +113,7 @@ let hl = null;
   const RACE = { human: 'Human', gnome: 'Gnome', orc: 'Orc', undead: 'Undead', troll: 'Troll', none: 'no racial' };
   const PET_SPELL = { 'pet:melee': 'Pet melee', 'pet:lashOfPain': 'Lash of Pain', 'pet:firebolt': 'Firebolt' };
   const mainSpell = b => /wrack/i.test(b.key) ? 'wrack' : /incin/.test(b.key) ? 'incinerate' : /fire/.test(b.key) ? 'immolate' : 'shadowBolt';
-  hl = { generated: D.generated, fight: settings.fight.duration + ' s fight, 1 target', gear: settings.gear.name, builds: {}, dps: [], spells: [], weights: {} };
+  hl = { generated: D.generated, fight: settings.fight.duration + ' s fight, 1 target', gear: settings.gear ? settings.gear.name : settings.gm === 'preBis' ? 'Phase 1 pre-raid gear' : String(settings.gm), builds: {}, dps: [], spells: [], weights: {} };
   builds.forEach(b => { hl.builds[b.key] = { name: b.short, pet: b.pet, icon: mainSpell(b) }; });
   D.results.forEach((r, i) => {
     const key = D.keys[i];

@@ -144,7 +144,7 @@ function G:build()
   self.qTitle = K.text(card, 22, C.gold, 'LEFT', K.FONT); self.qTitle:SetPoint('TOPLEFT', 106, -46)
   self.qSub = K.text(card, 14, C.text, 'LEFT'); self.qSub:SetPoint('TOPLEFT', 106, -80)
   self.qNote = K.text(card, 11, C.faint, 'LEFT'); self.qNote:SetPoint('TOPLEFT', 106, -112)
-  self.qNote:SetText('From the Forever Warlock Sim: ' .. RES.fight .. ', standard gear, results of ' .. RES.generated .. '.')
+  self.qNote:SetText('From the Forever Warlock Sim: ' .. RES.fight .. ', ' .. RES.gear .. ', results of ' .. RES.generated .. '.')
   -- the slider
   self.track = K.box(f, SW, 16, { 0.05, 0.04, 0.08 }, C.line, 1, 'Button')
   self.track:SetPoint('TOPLEFT', SX, -340)

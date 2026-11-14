@@ -20,7 +20,7 @@ local function buildName(key) return RES.builds[key] and RES.builds[key].name or
 local function buildIcon(key) local b = RES.builds[key]; return b and A.SPELLS[b.icon] and A.SPELLS[b.icon].id end
 
 H.TOPICS = {
-  dps = { title = 'Which sims more DPS?', note = 'Ready builds of the Forever Warlock Sim, ' .. RES.fight .. ', standard gear.', gap = 0.004,
+  dps = { title = 'Which sims more DPS?', note = 'Ready builds of the Forever Warlock Sim, ' .. RES.fight .. ', ' .. RES.gear .. '.', gap = 0.004,
     fmt = function(v) return K.num(v) .. ' DPS' end },
   spell = { title = 'Which deals more damage in its build?', note = 'Damage of one spell over a whole ' .. RES.fight .. ' (Human), from the sim.', gap = 0.04,
     fmt = function(v) return K.num(v) .. ' damage' end },
