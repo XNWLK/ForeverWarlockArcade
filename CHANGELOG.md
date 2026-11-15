@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.2.18
+- The Forever Warlock Sim's pre-raid off hands now have a +9 Intellect enchant. Every build gains 1 to 3 DPS, in the same order as before (Undead: Wrack DS 911.4, Shadow Demo 896.5, Fire Demo 878.1, Incinerate Pandemic 870.7, Incinerate DS 849.7). Higher or Lower and Guess the DPS use the new numbers.
+
 ## v0.2.17
 - The Forever Warlock Sim's pre-raid gear is now all blue items. Every build gains 5 to 12 DPS, in the same order as before (Undead: Wrack DS 908.7, Shadow Demo 894.4, Fire Demo 876.9, Incinerate Pandemic 868.6, Incinerate DS 847.5). Higher or Lower and Guess the DPS use the new numbers.
 
