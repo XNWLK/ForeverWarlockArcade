@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.2.19
+- The Forever Warlock Sim's newest numbers: Wrack DS wears new pre-raid legs, bracers, boots and belt and gains about 21 DPS. Shadow Demo no longer casts Immolate and gains 1 to 2 DPS. On-use trinkets are now used from each build's priority (Undead: Wrack DS 932.1, Shadow Demo 898.2, Fire Demo 878.1, Incinerate Pandemic 870.7, Incinerate DS 849.7). Higher or Lower and Guess the DPS use the new numbers, and Higher or Lower no longer has a Shadow Demo Immolate card.
+- Shadow and Flame's text now says 20%, as in the game.
+
 ## v0.2.18
 - The Forever Warlock Sim's pre-raid off hands now have a +9 Intellect enchant. Every build gains 1 to 3 DPS, in the same order as before (Undead: Wrack DS 911.4, Shadow Demo 896.5, Fire Demo 878.1, Incinerate Pandemic 870.7, Incinerate DS 849.7). Higher or Lower and Guess the DPS use the new numbers.
 
