@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.2.17
+- The Forever Warlock Sim's pre-raid gear is now all blue items. Every build gains 5 to 12 DPS, in the same order as before (Undead: Wrack DS 908.7, Shadow Demo 894.4, Fire Demo 876.9, Incinerate Pandemic 868.6, Incinerate DS 847.5). Higher or Lower and Guess the DPS use the new numbers.
+
 ## v0.2.16
 - The Forever Warlock Sim's pre-raid gear now has Phase 1 enchants. Every build gains 28 to 56 DPS, and Shadow Demo moves ahead of Fire Demo (Undead: Wrack DS 900, Shadow Demo 884.8, Fire Demo 864.6, Incinerate Pandemic 863.9, Incinerate DS 842.1). Higher or Lower and Guess the DPS use the new numbers.
 
