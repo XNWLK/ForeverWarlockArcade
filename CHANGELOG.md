@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.2.21
+- Spells now use their level 60 values from the game's data, through the Forever Warlock Sim: Searing Pain, Shadowburn, Soul Fire, Death Coil, Hellfire, Rain of Fire and Wrack hit a little harder.
+- Life Tap now gives 672 mana for 424 health (was 678 for 430) in DoT Juggler, Perfect Rotation, Tap Tap DPS and Type to Cast.
+- The builds move by less than 3 DPS (Undead: Wrack DS 933.1, Shadow Demo 898.6, Fire Demo 881, Incinerate Pandemic 871.1, Incinerate DS 849). Higher or Lower and Guess the DPS use the new numbers.
+
 ## v0.2.20
 - The Forever Warlock Sim's Wrack DS and Shadow Demo now wear Tearfall Bracers of Shadow Wrath. Shadow Demo gains 1 to 3 DPS and Wrack DS about 1 (Undead: Wrack DS 932.9, Shadow Demo 899, Fire Demo 878.1, Incinerate Pandemic 870.7, Incinerate DS 849.7). Higher or Lower and Guess the DPS use the new numbers.
 
