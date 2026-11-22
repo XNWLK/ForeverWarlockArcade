@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.2.22
+- The Forever Warlock Sim's newest numbers. Food with +28 spell damage adds 4 to 5 DPS to every build. Each spell now follows its own resist rule, Shadow Demo wears Leggings of Torment, and the build order stays the same (Undead: Wrack DS 937.2, Shadow Demo 904.7, Fire Demo 884.7, Incinerate Pandemic 874.6, Incinerate DS 853.4). Higher or Lower and Guess the DPS use the new numbers.
+
 ## v0.2.21
 - Spells now use their level 60 values from the game's data, through the Forever Warlock Sim: Searing Pain, Shadowburn, Soul Fire, Death Coil, Hellfire, Rain of Fire and Wrack hit a little harder.
 - Life Tap now gives 672 mana for 424 health (was 678 for 430) in DoT Juggler, Perfect Rotation, Tap Tap DPS and Type to Cast.
