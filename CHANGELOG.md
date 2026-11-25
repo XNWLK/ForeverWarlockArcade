@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.2.24
+- The Forever Warlock Sim's newest numbers. Every build now uses a staff with +65 Spell Power, elixirs count each stat only once, and Wrack DS saves its cooldowns for the opener. Fire Demo moves above Shadow Demo (Undead: Wrack DS 956.6, Fire Demo 902.1, Shadow Demo 885.6, Incinerate Pandemic 875, Incinerate DS 858.7). Higher or Lower and Guess the DPS use the new numbers.
+
 ## v0.2.23
 - The Forever Warlock Sim's newest numbers. Revelation, demon regen and crit, and several proc rates now follow measured in-game data, and the Weakness Analyzer cooldown is now 6 minutes. Shadow Demo and Incinerate Pandemic lose 12 to 13 DPS, Incinerate DS about 4 and Wrack DS about 3, Fire Demo stays the same, and the build order stays the same (Undead: Wrack DS 934.3, Shadow Demo 891.5, Fire Demo 884.8, Incinerate Pandemic 862.5, Incinerate DS 849). Fire Demo no longer casts Death Coil, so its card is gone. Higher or Lower and Guess the DPS use the new numbers.
 
