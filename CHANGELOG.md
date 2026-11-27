@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.2.25
+- The Forever Warlock Sim's newest numbers. Incinerate Pandemic, Incinerate DS and Fire Demo use new talents, and Zarla's Snack Pouch now follows combat logs. Incinerate DS gains about 10 DPS, Incinerate Pandemic about 5 and the Demo builds about 2, Wrack DS stays the same, and the build order stays the same (Undead: Wrack DS 956.5, Fire Demo 904.1, Shadow Demo 887.3, Incinerate Pandemic 879.9, Incinerate DS 869.1). Higher or Lower and Guess the DPS use the new numbers.
+
 ## v0.2.24
 - The Forever Warlock Sim's newest numbers. Every build now uses a staff with +65 Spell Power, elixirs count each stat only once, and Wrack DS saves its cooldowns for the opener. Fire Demo moves above Shadow Demo (Undead: Wrack DS 956.6, Fire Demo 902.1, Shadow Demo 885.6, Incinerate Pandemic 875, Incinerate DS 858.7). Higher or Lower and Guess the DPS use the new numbers.
 
