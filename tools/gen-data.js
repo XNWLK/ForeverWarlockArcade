@@ -100,7 +100,8 @@ const consumables = {};
 USE.forEach(k => {
   const c = WL.DEFAULT_CONFIG.consumables[k];
   if (!c) throw new Error('consumable ' + k + ' is gone from the sim');
-  consumables[k] = k === 'buildOil' ? { name: WL.OILS.spellstone.name, spell: WL.OILS.spellstone.id, text: c.desc }
+  // since sim v230 the stone's text starts with the sim page's 'Auto pick best: ...' - keep only the stones part in brackets
+  consumables[k] = k === 'buildOil' ? { name: WL.OILS.spellstone.name, spell: WL.OILS.spellstone.id, text: c.desc.replace(/^Auto pick best:[^(]*\((.*)\)$/, '$1') }
     : { name: c.name, item: c.id, text: c.desc };
 });
 
