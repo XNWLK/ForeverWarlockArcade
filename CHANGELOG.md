@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.2.26
+- The Forever Warlock Sim's newest numbers. Decimation now works at any boss health, so Shadow Demo and Fire Demo gain 12 to 15 DPS. The other builds stay the same, and the build order stays the same (Undead: Wrack DS 956.5, Fire Demo 916.1, Shadow Demo 902.7, Incinerate Pandemic 879.9, Incinerate DS 869.1). Higher or Lower and Guess the DPS use the new numbers.
+- Shard & Mult: the Major Spellstone tooltip now names both stones (Spellstone for Shadow builds, Firestone for Fire builds).
+
 ## v0.2.25
 - The Forever Warlock Sim's newest numbers. Incinerate Pandemic, Incinerate DS and Fire Demo use new talents, and Zarla's Snack Pouch now follows combat logs. Incinerate DS gains about 10 DPS, Incinerate Pandemic about 5 and the Demo builds about 2, Wrack DS stays the same, and the build order stays the same (Undead: Wrack DS 956.5, Fire Demo 904.1, Shadow Demo 887.3, Incinerate Pandemic 879.9, Incinerate DS 869.1). Higher or Lower and Guess the DPS use the new numbers.
 
